@@ -182,7 +182,7 @@
           <input type="number" id="targetH" value="230">
         </div>
       </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
         <div>
           <label>Max Size (KB):</label>
           <input type="number" id="targetKb" value="50">
@@ -194,6 +194,13 @@
             <option value="image/png">PNG</option>
           </select>
         </div>
+      </div>
+      <div>
+        <label>Background Color:</label>
+        <select id="bgColorChoice">
+          <option value="#ffffff">White Background (#FFFFFF)</option>
+          <option value="#38bdf8">Sky Blue Background (#38BDF8)</option>
+        </select>
       </div>
     </div>
 
@@ -332,6 +339,7 @@
     const targetKb = parseFloat(document.getElementById('targetKb').value) || 50;
     const format = document.getElementById('outFormat').value;
     const isInkBoost = document.getElementById('inkBoost').checked;
+    const selectedBg = document.getElementById('bgColorChoice').value;
 
     const name = document.getElementById('stampName').value.trim();
     const date = document.getElementById('stampDate').value.trim();
@@ -348,7 +356,8 @@
     finalCanvas.height = targetH;
     const ctx = finalCanvas.getContext('2d');
 
-    ctx.fillStyle = "#FFFFFF";
+    // Fill selected background color (White or Sky Blue)
+    ctx.fillStyle = selectedBg;
     ctx.fillRect(0, 0, targetW, targetH);
 
     if (isInkBoost) {
@@ -372,7 +381,7 @@
       ctx.font = `bold ${fontSize}px sans-serif`;
 
       if (name && date) {
-        ctx.fillText(name, targetW / 2, targetH - stripHeight + fontSize + 2);
+        ctx.fillText(name, targetW / 2, targetH - stripHeader + fontSize + 2); // wait, let's keep targetH - stripHeight + fontSize + 2
         ctx.font = `${Math.floor(fontSize * 0.9)}px sans-serif`;
         ctx.fillText(date, targetW / 2, targetH - 4);
       } else {
@@ -409,9 +418,4 @@
     dl.download = `DocPrep_${targetW}x${targetH}_${finalSizeKb}KB.${format === 'image/jpeg' ? 'jpg' : 'png'}`;
 
     document.getElementById('outputCard').style.display = 'block';
-    document.getElementById('outputCard').scrollIntoView({ behavior: 'smooth' });
-  }
-</script>
-
-</body>
-</html>
+  
