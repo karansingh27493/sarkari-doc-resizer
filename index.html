@@ -5,24 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- SEO & Social Meta Tags -->
-  <title>DocPrep Pro - Ultimate Photo, Signature & Govt Form Resizer (Exact KB & Pixels)</title>
-  <meta name="title" content="DocPrep Pro - Ultimate Photo, Signature & Govt Form Resizer">
-  <meta name="description" content="100% Free & Secure Online Tool to resize, crop, enhance, and compress photos & signatures for SSC, UPSC, BPSC, PAN Card, and Passports with Name-Date stamp.">
-  <meta name="keywords" content="ssc photo resizer 50kb, upsc signature 20kb, bpsc photo resizer, pan card photo 213x213, add name and date on photo, enhance signature online, compress image to kb">
+  <title>Sarkari Doc Resizer - Photo, Signature & Govt Exam Form Tool (Exact KB & Pixels)</title>
+  <meta name="title" content="Sarkari Doc Resizer - Photo, Signature & Govt Exam Form Tool">
+  <meta name="description" content="100% Free & Secure Online Tool to resize, crop, change background color, enhance ink, and compress photos & signatures for SSC, UPSC, BPSC, PAN Card, and Passports with Name-Date stamp.">
+  <meta name="keywords" content="ssc photo resizer 50kb, upsc signature 20kb, bpsc photo resizer, pan card photo 213x213, photo background color change, add name and date on photo, enhance signature online, compress image to kb">
   <meta name="robots" content="index, follow">
 
   <!-- Open Graph Meta -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://karansingh27493.github.io/quick-doc-resizer/">
-  <meta property="og:title" content="DocPrep Pro - Free Photo & Signature Resizer for Govt Exams">
-  <meta property="og:description" content="Resize and compress photos & signatures with exact KB and Name-Date stamp. 100% browser private.">
+  <meta property="og:url" content="https://karansingh27493.github.io/sarkari-doc-resizer/">
+  <meta property="og:title" content="Sarkari Doc Resizer - Free Photo & Signature Resizer for Govt Exams">
+  <meta property="og:description" content="Resize, change background color, and compress photos & signatures with exact KB and Name-Date stamp. 100% browser private.">
   
   <!-- Structured Data JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "DocPrep Pro",
+    "name": "Sarkari Doc Resizer",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "All",
     "offers": { "@type": "Offer", "price": "0" }
@@ -99,6 +99,9 @@
     input[type="text"], input[type="number"], select { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; outline: none; background: var(--card-bg); color: var(--text); }
     input:focus, select:focus { border-color: var(--primary); }
 
+    .custom-row { display: flex; gap: 10px; align-items: center; margin-top: 10px; background: rgba(37, 99, 235, 0.04); padding: 10px; border-radius: 8px; border: 1px solid var(--border); }
+    .color-picker-input { width: 45px; height: 35px; padding: 0; border: none; border-radius: 4px; cursor: pointer; }
+
     .enhancer-box { background: rgba(37, 99, 235, 0.06); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-top: 12px; display: flex; align-items: center; justify-content: space-between; }
     .toggle-switch { position: relative; width: 44px; height: 24px; }
     .toggle-switch input { opacity: 0; width: 0; height: 0; }
@@ -130,13 +133,13 @@
 <div class="container">
   <header>
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle Dark/Light">🌙</button>
-    <h1>DocPrep Pro Suite</h1>
-    <p>1-Click Online Photo, Signature & Document Resizer</p>
+    <h1>Sarkari Doc Resizer</h1>
+    <p>Official Online Photo, Signature & Document Formatting Suite</p>
     <div class="trust-badge">🔒 100% Client-Side Private • Zero Server Upload</div>
   </header>
 
   <div class="share-strip">
-    <a class="share-btn share-wa" href="javascript:void(0)" onclick="share('wa')">💬 Share WhatsApp</a>
+    <a class="share-btn share-wa" href="javascript:void(0)" onclick="share('wa')">💬 WhatsApp</a>
     <a class="share-btn share-tg" href="javascript:void(0)" onclick="share('tg')">✈️ Telegram</a>
     <button class="share-btn share-cp" onclick="copyLink()">📋 Copy Link</button>
   </div>
@@ -194,6 +197,14 @@
           </select>
         </div>
       </div>
+
+      <div class="custom-row">
+        <div>
+          <label style="margin:0;">Photo Background Color:</label>
+          <small style="color:var(--text-muted); font-size:11px;">Default White (UPSC/SSC/Passport)</small>
+        </div>
+        <input type="color" id="photoBgColor" value="#ffffff" class="color-picker-input">
+      </div>
     </div>
 
     <div class="card">
@@ -223,7 +234,7 @@
     <div class="section-title">✅ Processed Ready File</div>
     <img id="finalImg" alt="Result"><br>
     <div class="stats-tag" id="statsInfo">Ready</div><br>
-    <a id="downloadLink" class="btn-download" download="DocPrep_Result.jpg">⬇️ Download Ready File</a>
+    <a id="downloadLink" class="btn-download" download="Sarkari_Resized.jpg">⬇️ Download Ready File</a>
   </div>
 
   <section class="faq-section">
@@ -240,10 +251,14 @@
       <h3>Are my personal photos and signatures safe?</h3>
       <p>Yes, 100%. All processing occurs strictly inside your web browser. No image data is ever transferred across the internet.</p>
     </div>
+    <div class="faq-card">
+      <h3>How to change photo background to White or Blue?</h3>
+      <p>Use the "Photo Background Color" selector to choose Pure White (#ffffff) or Light Blue (#dbeafe) as mandated by exam guidelines.</p>
+    </div>
   </section>
 
   <footer>
-    <p>© 2026 DocPrep Pro Suite • Fast & Secure Application Utility</p>
+    <p>© 2026 Sarkari Doc Resizer • Fast, Free & Secure Utility</p>
   </footer>
 </div>
 
@@ -309,7 +324,7 @@
   }
 
   function share(platform) {
-    const text = "Resize and fix photo/signature for SSC, UPSC & BPSC forms instantly: ";
+    const text = "Resize and format photo/signature for SSC, UPSC & BPSC forms instantly: ";
     const url = window.location.href;
     if (platform === 'wa') window.open(`https://wa.me/?text=${encodeURIComponent(text + url)}`);
     if (platform === 'tg') window.open(`https://t.me/share/url?url=${url}&text=${encodeURIComponent(text)}`);
@@ -331,6 +346,7 @@
     const targetKb = parseFloat(document.getElementById('targetKb').value) || 50;
     const format = document.getElementById('outFormat').value;
     const isInkBoost = document.getElementById('inkBoost').checked;
+    const chosenBgColor = document.getElementById('photoBgColor').value;
 
     const name = document.getElementById('stampName').value.trim();
     const date = document.getElementById('stampDate').value.trim();
@@ -347,7 +363,8 @@
     finalCanvas.height = targetH;
     const ctx = finalCanvas.getContext('2d');
 
-    ctx.fillStyle = "#FFFFFF";
+    // Fill background color
+    ctx.fillStyle = chosenBgColor;
     ctx.fillRect(0, 0, targetW, targetH);
 
     if (isInkBoost) {
@@ -356,6 +373,7 @@
     ctx.drawImage(croppedCanvas, 0, 0, targetW, targetH);
     ctx.filter = 'none';
 
+    // Candidate Name & DOP Banner
     if (name || date) {
       const stripHeight = Math.max(32, Math.floor(targetH * 0.18));
       ctx.fillStyle = "#FFFFFF";
@@ -379,6 +397,7 @@
       }
     }
 
+    // Binary search compression engine
     let quality = 0.95;
     let dataUrl = finalCanvas.toDataURL(format, quality);
 
@@ -390,27 +409,4 @@
         let testSizeKb = (testUrl.length * 0.75) / 1024;
 
         if (testSizeKb > targetKb) {
-          maxQ = midQ;
-        } else {
-          minQ = midQ;
-          dataUrl = testUrl;
-        }
-      }
-    }
-
-    const finalSizeKb = ((dataUrl.length * 0.75) / 1024).toFixed(1);
-    
-    document.getElementById('finalImg').src = dataUrl;
-    document.getElementById('statsInfo').innerHTML = `Dimensions: <b>${targetW} x ${targetH} px</b> | File Size: <b>${finalSizeKb} KB</b>`;
-    
-    const dl = document.getElementById('downloadLink');
-    dl.href = dataUrl;
-    dl.download = `DocPrep_${targetW}x${targetH}_${finalSizeKb}KB.${format === 'image/jpeg' ? 'jpg' : 'png'}`;
-
-    document.getElementById('outputCard').style.display = 'block';
-    document.getElementById('outputCard').scrollIntoView({ behavior: 'smooth' });
-  }
-</script>
-
-</body>
-</html>
+        
