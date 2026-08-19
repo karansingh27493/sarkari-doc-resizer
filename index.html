@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- 1. Google SEO & Social Meta Tags -->
-  <title>Sarkari Doc Resizer - Photo, Signature & Govt Form Tool (Exact KB & Pixels)</title>
-  <meta name="title" content="Sarkari Doc Resizer - Photo, Signature & Govt Form Tool">
+  <!-- SEO & Social Meta Tags -->
+  <title>DocPrep Pro - Ultimate Photo, Signature & Govt Form Resizer (Exact KB & Pixels)</title>
+  <meta name="title" content="DocPrep Pro - Ultimate Photo, Signature & Govt Form Resizer">
   <meta name="description" content="100% Free & Secure Online Tool to resize, crop, change background color, enhance ink, and compress photos & signatures for SSC, UPSC, BPSC, PAN Card, and Passports with Name-Date stamp.">
   <meta name="keywords" content="ssc photo resizer 50kb, upsc signature 20kb, bpsc photo resizer, pan card photo 213x213, photo background color change, add name and date on photo, enhance signature online, compress image to kb">
   <meta name="robots" content="index, follow">
@@ -14,23 +14,20 @@
   <!-- Open Graph Meta -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://karansingh27493.github.io/sarkari-doc-resizer/">
-  <meta property="og:title" content="Sarkari Doc Resizer - Free Photo & Signature Resizer for Govt Exams">
-  <meta property="og:description" content="Resize and compress photos & signatures with exact KB, Background Color change, and Name-Date stamp. 100% browser private.">
+  <meta property="og:title" content="DocPrep Pro - Free Photo & Signature Resizer for Govt Exams">
+  <meta property="og:description" content="Resize, change background color, and compress photos & signatures with exact KB and Name-Date stamp. 100% browser private.">
   
-  <!-- 2. Google Structured Data JSON-LD Schema -->
+  <!-- Structured Data JSON-LD (Google Search Indexing) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Sarkari Doc Resizer",
+    "name": "DocPrep Pro",
     "url": "https://karansingh27493.github.io/sarkari-doc-resizer/",
-    "description": "Online tool to resize, crop, change background color, format, and compress photos and signatures for competitive exams.",
+    "description": "100% Free online tool to resize, crop, change background color, and compress photos & signatures for SSC, UPSC, BPSC, and PAN cards.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "All",
-    "offers": {
-      "@type": "Offer",
-      "price": "0"
-    }
+    "offers": { "@type": "Offer", "price": "0" }
   }
   </script>
 
@@ -69,14 +66,11 @@
     header h1 { font-size: 26px; color: var(--primary); margin-bottom: 4px; }
     header p { color: var(--text-muted); font-size: 14px; }
 
-    /* 3. Dark/Light Theme Toggle */
     .theme-btn { position: absolute; right: 0; top: 0; background: var(--card-bg); border: 1px solid var(--border); border-radius: 50%; width: 38px; height: 38px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
 
-    /* 4. Privacy Trust Badge */
     .trust-badge { background: #dcfce7; color: #166534; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-align: center; margin: 12px auto; display: inline-flex; align-items: center; gap: 6px; }
     body.dark-theme .trust-badge { background: #064e3b; color: #86efac; }
 
-    /* 5. Viral Sharing Strip */
     .share-strip { display: flex; justify-content: center; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
     .share-btn { padding: 6px 14px; border-radius: 20px; border: none; font-size: 12px; font-weight: 600; cursor: pointer; color: #fff; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
     .share-wa { background: #25d366; }
@@ -84,19 +78,17 @@
     .share-cp { background: #64748b; }
 
     .card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid var(--border); margin-bottom: 20px; }
+
     .section-title { font-size: 13px; font-weight: 700; color: var(--secondary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
     
-    /* 6. Instant Exam Presets Grid */
     .preset-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 8px; margin-bottom: 18px; }
     .preset-chip { background: var(--bg); border: 1px solid var(--border); padding: 8px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; text-align: center; cursor: pointer; transition: 0.2s; }
     .preset-chip:hover { border-color: var(--primary); color: var(--primary); }
 
-    /* 7. Working Upload Box */
     .upload-zone { border: 2px dashed var(--primary); border-radius: 10px; padding: 25px; text-align: center; cursor: pointer; background: rgba(37, 99, 235, 0.04); transition: 0.2s; }
     .upload-zone:hover { background: rgba(37, 99, 235, 0.08); }
     .upload-zone input { display: none; }
 
-    /* 8. Cropper Container */
     .cropper-box { max-height: 380px; width: 100%; background: #000; border-radius: 8px; overflow: hidden; margin-top: 15px; display: none; }
     .cropper-box img { max-width: 100%; }
 
@@ -109,11 +101,9 @@
     input[type="text"], input[type="number"], select { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; outline: none; background: var(--card-bg); color: var(--text); }
     input:focus, select:focus { border-color: var(--primary); }
 
-    /* 9. Background Color Selector Row */
     .custom-row { display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-top: 10px; background: rgba(37, 99, 235, 0.04); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); }
     .color-picker-input { width: 45px; height: 32px; padding: 0; border: none; border-radius: 4px; cursor: pointer; }
 
-    /* 10. Magic Signature Ink Boost Box */
     .enhancer-box { background: rgba(37, 99, 235, 0.06); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-top: 12px; display: flex; align-items: center; justify-content: space-between; }
     .toggle-switch { position: relative; width: 44px; height: 24px; }
     .toggle-switch input { opacity: 0; width: 0; height: 0; }
@@ -125,14 +115,12 @@
     .btn-main { width: 100%; padding: 14px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.2s; }
     .btn-main:hover { background: var(--primary-hover); }
 
-    /* 11. Final Output Display & Download */
     .output-section { text-align: center; display: none; }
     .output-section img { max-width: 180px; max-height: 220px; border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 10px; }
     .stats-tag { font-size: 13px; font-weight: 600; color: #15803d; background: #dcfce7; padding: 6px 14px; border-radius: 20px; display: inline-block; margin-bottom: 12px; }
     body.dark-theme .stats-tag { background: #064e3b; color: #86efac; }
     .btn-download { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; padding: 11px 28px; border-radius: 6px; font-weight: 700; font-size: 14px; }
 
-    /* 12. SEO FAQ Section */
     .faq-section { margin-top: 30px; border-top: 1px solid var(--border); padding-top: 25px; }
     .faq-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 10px; }
     .faq-card h3 { font-size: 14px; color: var(--secondary); margin-bottom: 5px; }
@@ -147,7 +135,7 @@
 <div class="container">
   <header>
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle Dark/Light">🌙</button>
-    <h1>Sarkari Doc Resizer</h1>
+    <h1>DocPrep Pro Suite</h1>
     <p>1-Click Online Photo, Signature & Document Resizer</p>
     <div class="trust-badge">🔒 100% Client-Side Private • Zero Server Upload</div>
   </header>
@@ -169,7 +157,7 @@
       <div class="preset-chip" onclick="setPreset(480, 640, 100)">BPSC / PSC Photo<br><small>3:4 Ratio | 100KB</small></div>
     </div>
 
-    <!-- Working Upload Zone -->
+    <!-- Exact Original Working Upload Block -->
     <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
       <input type="file" id="fileInput" accept="image/*">
       <p id="uploadLabel">📁 <b>Click or Drag & Drop Photo / Signature</b><br><small style="color:var(--text-muted)">Supports JPG, PNG, WEBP</small></p>
@@ -223,7 +211,6 @@
       </div>
     </div>
 
-    <!-- 13. Auto-Saved Name & Date on Photo -->
     <div class="card">
       <div class="section-title">🏷️ Name & Date on Photo (Auto-Saved)</div>
       <label>Candidate Full Name:</label>
@@ -251,7 +238,7 @@
     <div class="section-title">✅ Processed Ready File</div>
     <img id="finalImg" alt="Result"><br>
     <div class="stats-tag" id="statsInfo">Ready</div><br>
-    <a id="downloadLink" class="btn-download" download="Sarkari_Resized.jpg">⬇️ Download Ready File</a>
+    <a id="downloadLink" class="btn-download" download="DocPrep_Result.jpg">⬇️ Download Ready File</a>
   </div>
 
   <section class="faq-section">
@@ -269,13 +256,13 @@
       <p>Yes, 100%. All processing occurs strictly inside your web browser. No image data is ever transferred across the internet.</p>
     </div>
     <div class="faq-card">
-      <h3>How to change photo background color to White or Blue?</h3>
+      <h3>How to change photo background to White or Blue?</h3>
       <p>Use the "Photo Background Color" selector to choose Pure White (#ffffff) or Sky Blue as required by official exam notifications.</p>
     </div>
   </section>
 
   <footer>
-    <p>© 2026 Sarkari Doc Resizer • Fast, Free & Secure Application Utility</p>
+    <p>© 2026 DocPrep Pro Suite • Fast & Secure Application Utility</p>
   </footer>
 </div>
 
@@ -307,6 +294,7 @@
     localStorage.setItem('dp_date', document.getElementById('stampDate').value);
   }
 
+  /* Exact Original File Loader Event */
   fileInput.addEventListener('change', function(e) {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -352,7 +340,6 @@
     alert("Website link copied to clipboard!");
   }
 
-  /* 14. Binary-Search KB Compression Engine & Dynamic Background Fill */
   function processFinalOutput() {
     if (!cropper) {
       alert("Please choose a photo or signature file first!");
@@ -381,7 +368,7 @@
     finalCanvas.height = targetH;
     const ctx = finalCanvas.getContext('2d');
 
-    // Fill chosen background color
+    // Dynamic Selected Background Fill
     ctx.fillStyle = chosenBgColor;
     ctx.fillRect(0, 0, targetW, targetH);
 
@@ -391,7 +378,6 @@
     ctx.drawImage(croppedCanvas, 0, 0, targetW, targetH);
     ctx.filter = 'none';
 
-    // Candidate Name & DOP Banner
     if (name || date) {
       const stripHeight = Math.max(32, Math.floor(targetH * 0.18));
       ctx.fillStyle = "#FFFFFF";
@@ -403,4 +389,17 @@
       ctx.fillStyle = "#000000";
       ctx.textAlign = "center";
       
-      let fontSize = 
+      let fontSize = Math.floor(stripHeight * 0.35);
+      ctx.font = `bold ${fontSize}px sans-serif`;
+
+      if (name && date) {
+        ctx.fillText(name, targetW / 2, targetH - stripHeight + fontSize + 2);
+        ctx.font = `${Math.floor(fontSize * 0.9)}px sans-serif`;
+        ctx.fillText(date, targetW / 2, targetH - 4);
+      } else {
+        ctx.fillText(name || date, targetW / 2, targetH - (stripHeight / 2) + (fontSize / 3));
+      }
+    }
+
+    let quality = 0.95;
+    let dataUrl = finalCanvas.toDataUR
