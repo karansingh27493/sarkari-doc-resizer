@@ -34,7 +34,7 @@
   }
   </script>
 
-  <!-- Cropper.js CDN -->
+  <!-- Cropper.js Stylesheet & Script -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
@@ -62,7 +62,7 @@
       --border: #334155;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding: 12px; transition: 0.2s; }
+    body { background-color: var(--bg); color: var(--text); padding: 12px; transition: background-color 0.2s, color 0.2s; }
     .container { max-width: 850px; margin: 0 auto; }
     
     header { text-align: center; margin-bottom: 15px; position: relative; }
@@ -84,13 +84,13 @@
     .section-title { font-size: 12px; font-weight: 700; color: var(--secondary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
     
     .preset-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(115px, 1fr)); gap: 6px; margin-bottom: 15px; }
-    .preset-chip { background: var(--bg); border: 1px solid var(--border); padding: 8px 6px; border-radius: 8px; font-size: 11px; font-weight: 600; text-align: center; cursor: pointer; }
+    .preset-chip { background: var(--bg); border: 1px solid var(--border); padding: 8px 6px; border-radius: 8px; font-size: 11px; font-weight: 600; text-align: center; cursor: pointer; transition: 0.2s; }
     .preset-chip:hover { border-color: var(--primary); color: var(--primary); }
 
-    /* Direct 100% Reliable File Picker */
-    .file-input-box { background: rgba(37, 99, 235, 0.05); border: 2px dashed var(--primary); border-radius: 10px; padding: 20px 15px; text-align: center; }
-    .file-native-input { width: 100%; max-width: 320px; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; margin-top: 8px; color: var(--text); display: block; margin-left: auto; margin-right: auto; }
-    .status-msg { margin-top: 10px; font-size: 13px; font-weight: 700; color: #15803d; }
+    /* Guaranteed Native File Upload Field */
+    .file-input-box { background: rgba(37, 99, 235, 0.04); border: 2px dashed var(--primary); border-radius: 10px; padding: 20px 15px; text-align: center; }
+    .file-native-input { width: 100%; max-width: 320px; padding: 10px; font-size: 13px; font-weight: 600; cursor: pointer; background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; margin-top: 8px; color: var(--text); }
+    .status-msg { margin-top: 10px; font-size: 12px; font-weight: 600; color: #15803d; }
 
     .cropper-box { width: 100%; max-height: 400px; background: #000; border-radius: 8px; overflow: hidden; margin-top: 15px; display: none; }
     .cropper-box img { max-width: 100%; display: block; }
@@ -160,10 +160,10 @@
       <div class="preset-chip" onclick="setPreset(480, 640, 100)">BPSC / PSC Photo<br><small>3:4 Ratio | 100KB</small></div>
     </div>
 
-    <!-- Step 1 Upload -->
+    <!-- Direct Inline onchange Trigger -->
     <div class="file-input-box">
-      <p style="font-size:15px; font-weight:700;">📁 Step 1: Select Photo / Signature File</p>
-      <input type="file" id="fileInput" class="file-native-input" accept="image/*">
+      <p style="font-size:14px; font-weight:700;">📁 Step 1: Select Photo / Signature File</p>
+      <input type="file" id="fileInput" class="file-native-input" accept="image/*" onchange="handleFileSelect(this)">
       <div id="statusMsg" class="status-msg" style="display:none;"></div>
     </div>
 
@@ -266,69 +266,78 @@
 </div>
 
 <script>
-  let cropper = null;
-  let rawImgElement = null;
+  var cropper = null;
+  var loadedImageElement = null;
 
-  window.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('stampName').value = localStorage.getItem('dp_name') || '';
-    document.getElementById('stampDate').value = localStorage.getItem('dp_date') || '';
-    if (localStorage.getItem('dp_theme') === 'dark') {
-      document.body.classList.add('dark-theme');
-      document.getElementById('themeBtn').innerText = '☀️';
-    }
-  });
+  window.onload = function() {
+    try {
+      document.getElementById('stampName').value = localStorage.getItem('dp_name') || '';
+      document.getElementById('stampDate').value = localStorage.getItem('dp_date') || '';
+      if (localStorage.getItem('dp_theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+        document.getElementById('themeBtn').innerText = '☀️';
+      }
+    } catch(e) {}
+  };
 
   function toggleTheme() {
     document.body.classList.toggle('dark-theme');
-    const isDark = document.body.classList.contains('dark-theme');
+    var isDark = document.body.classList.contains('dark-theme');
     document.getElementById('themeBtn').innerText = isDark ? '☀️' : '🌙';
-    localStorage.setItem('dp_theme', isDark ? 'dark' : 'light');
+    try { localStorage.setItem('dp_theme', isDark ? 'dark' : 'light'); } catch(e) {}
   }
 
   function saveUserData() {
-    localStorage.setItem('dp_name', document.getElementById('stampName').value);
-    localStorage.setItem('dp_date', document.getElementById('stampDate').value);
+    try {
+      localStorage.setItem('dp_name', document.getElementById('stampName').value);
+      localStorage.setItem('dp_date', document.getElementById('stampDate').value);
+    } catch(e) {}
   }
 
-  // Crash-Proof File Selector
-  document.getElementById('fileInput').addEventListener('change', function(e) {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
+  // Bulletproof Instant File Handler
+  function handleFileSelect(input) {
+    if (!input.files || !input.files[0]) return;
+    var file = input.files[0];
     
-    const file = files[0];
-    const status = document.getElementById('statusMsg');
+    var status = document.getElementById('statusMsg');
     status.style.display = 'block';
-    status.innerHTML = `✓ Loaded: <b>${file.name}</b> (${(file.size/1024).toFixed(1)} KB)`;
+    status.innerHTML = '✓ Selected: <b>' + file.name + '</b> (' + (file.size/1024).toFixed(1) + ' KB)';
 
-    const objectUrl = URL.createObjectURL(file);
-    const cropImg = document.getElementById('cropImg');
+    var reader = new FileReader();
+    reader.onload = function(evt) {
+      var cropBox = document.getElementById('cropperBox');
+      var cropImg = document.getElementById('cropImg');
+      var cropActions = document.getElementById('cropActions');
 
-    if (cropper) {
-      cropper.destroy();
-      cropper = null;
-    }
+      cropBox.style.display = 'block';
+      cropActions.style.display = 'flex';
 
-    document.getElementById('cropperBox').style.display = 'block';
-    document.getElementById('cropActions').style.display = 'flex';
+      loadedImageElement = new Image();
+      loadedImageElement.onload = function() {
+        cropImg.src = evt.target.result;
 
-    // Wait for the DOM image to load before attaching Cropper
-    cropImg.onload = function() {
-      rawImgElement = cropImg;
-      const w = parseInt(document.getElementById('targetW').value) || 200;
-      const h = parseInt(document.getElementById('targetH').value) || 230;
+        if (cropper) {
+          cropper.destroy();
+          cropper = null;
+        }
 
-      if (typeof Cropper !== 'undefined') {
-        cropper = new Cropper(cropImg, {
-          aspectRatio: w / h,
-          viewMode: 1,
-          autoCropArea: 0.95,
-          responsive: true,
-          restore: false
-        });
-      }
+        var w = parseInt(document.getElementById('targetW').value) || 200;
+        var h = parseInt(document.getElementById('targetH').value) || 230;
+
+        if (typeof Cropper !== 'undefined') {
+          cropper = new Cropper(cropImg, {
+            aspectRatio: w / h,
+            viewMode: 1,
+            autoCropArea: 0.95,
+            responsive: true,
+            restore: false
+          });
+        }
+      };
+      loadedImageElement.src = evt.target.result;
     };
-    cropImg.src = objectUrl;
-  });
+    reader.readAsDataURL(file);
+  }
 
   function rotateLeft() { if (cropper) cropper.rotate(-90); }
   function rotateRight() { if (cropper) cropper.rotate(90); }
@@ -344,10 +353,10 @@
   }
 
   function share(platform) {
-    const text = "Resize and format photo/signature for SSC, UPSC & BPSC forms instantly: ";
-    const url = window.location.href;
-    if (platform === 'wa') window.open(`https://wa.me/?text=${encodeURIComponent(text + url)}`);
-    if (platform === 'tg') window.open(`https://t.me/share/url?url=${url}&text=${encodeURIComponent(text)}`);
+    var text = "Resize and format photo/signature for SSC, UPSC & BPSC forms instantly: ";
+    var url = window.location.href;
+    if (platform === 'wa') window.open('https://wa.me/?text=' + encodeURIComponent(text + url));
+    if (platform === 'tg') window.open('https://t.me/share/url?url=' + url + '&text=' + encodeURIComponent(text));
   }
 
   function copyLink() {
@@ -356,22 +365,22 @@
   }
 
   function processFinalOutput() {
-    if (!rawImgElement && !cropper) {
-      alert("Pehle Step 1 mein Photo ya Signature file select karein!");
+    if (!loadedImageElement && !cropper) {
+      alert("Pehle Step 1 mein Photo ya Signature select karein!");
       return;
     }
 
-    const targetW = parseInt(document.getElementById('targetW').value) || 200;
-    const targetH = parseInt(document.getElementById('targetH').value) || 230;
-    const targetKb = parseFloat(document.getElementById('targetKb').value) || 50;
-    const format = document.getElementById('outFormat').value;
-    const isInkBoost = document.getElementById('inkBoost').checked;
-    const chosenBgColor = document.getElementById('photoBgColor').value;
+    var targetW = parseInt(document.getElementById('targetW').value) || 200;
+    var targetH = parseInt(document.getElementById('targetH').value) || 230;
+    var targetKb = parseFloat(document.getElementById('targetKb').value) || 50;
+    var format = document.getElementById('outFormat').value;
+    var isInkBoost = document.getElementById('inkBoost').checked;
+    var chosenBgColor = document.getElementById('photoBgColor').value;
 
-    const name = document.getElementById('stampName').value.trim();
-    const date = document.getElementById('stampDate').value.trim();
+    var name = document.getElementById('stampName').value.trim();
+    var date = document.getElementById('stampDate').value.trim();
 
-    let croppedCanvas = null;
+    var croppedCanvas = null;
     if (cropper) {
       croppedCanvas = cropper.getCroppedCanvas({
         width: targetW,
@@ -381,20 +390,20 @@
       });
     }
 
-    const finalCanvas = document.createElement('canvas');
+    var finalCanvas = document.createElement('canvas');
     finalCanvas.width = targetW;
     finalCanvas.height = targetH;
-    const ctx = finalCanvas.getContext('2d');
+    var ctx = finalCanvas.getContext('2d');
 
     // Background Color
     ctx.fillStyle = chosenBgColor;
     ctx.fillRect(0, 0, targetW, targetH);
 
-    let stripHeight = 0;
+    var stripHeight = 0;
     if (name || date) {
       stripHeight = Math.max(32, Math.floor(targetH * 0.18));
     }
-    const renderHeight = targetH - stripHeight;
+    var renderHeight = targetH - stripHeight;
 
     if (isInkBoost) {
       ctx.filter = 'contrast(220%) brightness(105%) grayscale(100%)';
@@ -402,17 +411,10 @@
     
     if (croppedCanvas) {
       ctx.drawImage(croppedCanvas, 0, 0, targetW, renderHeight);
-    } else if (rawImgElement) {
-      ctx.drawImage(rawImgElement, 0, 0, targetW, renderHeight);
+    } else if (loadedImageElement) {
+      ctx.drawImage(loadedImageElement, 0, 0, targetW, renderHeight);
     }
     ctx.filter = 'none';
 
     // Candidate Name & DOP Strip
-    if (name || date) {
-      ctx.fillStyle = "#FFFFFF";
-      ctx.fillRect(0, targetH - stripHeight, targetW, stripHeight);
-      ctx.strokeStyle = "#94a3b8";
-      ctx.lineWidth = 1;
-      ctx.strokeRect(0, targetH - stripHeight, targetW, stripHeight);
-
-      ctx.fillSt
+    if (name || date)
