@@ -1,1 +1,1 @@
-# quick-doc-resizer
+# sarkari-doc-resizer
