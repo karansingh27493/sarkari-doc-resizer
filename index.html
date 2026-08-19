@@ -7,15 +7,15 @@
   <!-- SEO & Social Meta Tags -->
   <title>DocPrep Pro - Ultimate Photo, Signature & Govt Form Resizer (Exact KB & Pixels)</title>
   <meta name="title" content="DocPrep Pro - Ultimate Photo, Signature & Govt Form Resizer">
-  <meta name="description" content="100% Free & Secure Online Tool to resize, crop, change background color, enhance ink, and compress photos & signatures for SSC, UPSC, BPSC, PAN Card, and Passports with Name-Date stamp.">
-  <meta name="keywords" content="ssc photo resizer 50kb, upsc signature 20kb, bpsc photo resizer, pan card photo 213x213, photo background color change, add name and date on photo, enhance signature online, compress image to kb">
+  <meta name="description" content="100% Free & Secure Online Tool to resize, crop, enhance, and compress photos & signatures for SSC, UPSC, BPSC, PAN Card, and Passports with Name-Date stamp.">
+  <meta name="keywords" content="ssc photo resizer 50kb, upsc signature 20kb, bpsc photo resizer, pan card photo 213x213, add name and date on photo, enhance signature online, compress image to kb">
   <meta name="robots" content="index, follow">
 
   <!-- Open Graph Meta -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://karansingh27493.github.io/sarkari-doc-resizer/">
   <meta property="og:title" content="DocPrep Pro - Free Photo & Signature Resizer for Govt Exams">
-  <meta property="og:description" content="Resize, change background color, and compress photos & signatures with exact KB and Name-Date stamp. 100% browser private.">
+  <meta property="og:description" content="Resize and compress photos & signatures with exact KB and Name-Date stamp. 100% browser private.">
   
   <!-- Structured Data JSON-LD (Google Search Indexing) -->
   <script type="application/ld+json">
@@ -101,9 +101,6 @@
     input[type="text"], input[type="number"], select { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; outline: none; background: var(--card-bg); color: var(--text); }
     input:focus, select:focus { border-color: var(--primary); }
 
-    .custom-row { display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-top: 10px; background: rgba(37, 99, 235, 0.04); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); }
-    .color-picker-input { width: 45px; height: 32px; padding: 0; border: none; border-radius: 4px; cursor: pointer; }
-
     .enhancer-box { background: rgba(37, 99, 235, 0.06); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-top: 12px; display: flex; align-items: center; justify-content: space-between; }
     .toggle-switch { position: relative; width: 44px; height: 24px; }
     .toggle-switch input { opacity: 0; width: 0; height: 0; }
@@ -157,7 +154,7 @@
       <div class="preset-chip" onclick="setPreset(480, 640, 100)">BPSC / PSC Photo<br><small>3:4 Ratio | 100KB</small></div>
     </div>
 
-    <!-- Exact Original Working Upload Block -->
+    <!-- Working Upload Zone -->
     <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
       <input type="file" id="fileInput" accept="image/*">
       <p id="uploadLabel">📁 <b>Click or Drag & Drop Photo / Signature</b><br><small style="color:var(--text-muted)">Supports JPG, PNG, WEBP</small></p>
@@ -187,7 +184,7 @@
           <input type="number" id="targetH" value="230">
         </div>
       </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
         <div>
           <label>Max Size (KB):</label>
           <input type="number" id="targetKb" value="50">
@@ -200,14 +197,9 @@
           </select>
         </div>
       </div>
-
-      <!-- Photo Background Color Selector -->
-      <div class="custom-row">
-        <div>
-          <label style="margin:0;">Photo Background Color:</label>
-          <small style="color:var(--text-muted); font-size:11px;">Default White (SSC/UPSC/Passport)</small>
-        </div>
-        <input type="color" id="photoBgColor" value="#ffffff" class="color-picker-input">
+      <div>
+        <label>Photo Background Color:</label>
+        <input type="color" id="photoBgColor" value="#ffffff" style="height: 38px; padding: 2px; cursor: pointer;">
       </div>
     </div>
 
@@ -255,10 +247,6 @@
       <h3>Are my personal photos and signatures safe?</h3>
       <p>Yes, 100%. All processing occurs strictly inside your web browser. No image data is ever transferred across the internet.</p>
     </div>
-    <div class="faq-card">
-      <h3>How to change photo background to White or Blue?</h3>
-      <p>Use the "Photo Background Color" selector to choose Pure White (#ffffff) or Sky Blue as required by official exam notifications.</p>
-    </div>
   </section>
 
   <footer>
@@ -294,7 +282,6 @@
     localStorage.setItem('dp_date', document.getElementById('stampDate').value);
   }
 
-  /* Exact Original File Loader Event */
   fileInput.addEventListener('change', function(e) {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -351,7 +338,7 @@
     const targetKb = parseFloat(document.getElementById('targetKb').value) || 50;
     const format = document.getElementById('outFormat').value;
     const isInkBoost = document.getElementById('inkBoost').checked;
-    const chosenBgColor = document.getElementById('photoBgColor').value;
+    const chosenBgColor = document.getElementById('photoBgColor') ? document.getElementById('photoBgColor').value : "#FFFFFF";
 
     const name = document.getElementById('stampName').value.trim();
     const date = document.getElementById('stampDate').value.trim();
@@ -368,7 +355,7 @@
     finalCanvas.height = targetH;
     const ctx = finalCanvas.getContext('2d');
 
-    // Dynamic Selected Background Fill
+    // Fill Selected Background Color
     ctx.fillStyle = chosenBgColor;
     ctx.fillRect(0, 0, targetW, targetH);
 
@@ -402,4 +389,29 @@
     }
 
     let quality = 0.95;
-    let dataUrl = finalCanvas.toDataUR
+    let dataUrl = finalCanvas.toDataURL(format, quality);
+
+    if (format === 'image/jpeg') {
+      let minQ = 0.05, maxQ = 0.98;
+      for (let i = 0; i < 7; i++) {
+        let midQ = (minQ + maxQ) / 2;
+        let testUrl = finalCanvas.toDataURL('image/jpeg', midQ);
+        let testSizeKb = (testUrl.length * 0.75) / 1024;
+
+        if (testSizeKb > targetKb) {
+          maxQ = midQ;
+        } else {
+          minQ = midQ;
+          dataUrl = testUrl;
+        }
+      }
+    }
+
+    const finalSizeKb = ((dataUrl.length * 0.75) / 1024).toFixed(1);
+    
+    document.getElementById('finalImg').src = dataUrl;
+    document.getElementById('statsInfo').innerHTML = `Dimensions: <b>${targetW} x ${targetH} px</b> | File Size: <b>${finalSizeKb} KB</b>`;
+    
+    const dl = document.getElementById('downloadLink');
+    dl.href = dataUrl;
+    dl.download = `DocPrep_${targetW}x${targetH}_${finalSizeK
