@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DocPrep Pro - All-in-One Photo, Signature & Govt Form Resizer</title>
+  <meta name="description" content="Resize and compress photos, signatures and certificates for SSC, UPSC, PAN Card, and Indian Passports with Name & Date stamping. 100% Free & Private.">
+  
+  <!-- Cropper.js CDN for interactive cropping -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #0f172a;
+      --accent: #10b981;
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --text: #334155;
+      --border: #cbd5e1;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 15px; }
+    .container { max-width: 950px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 20px; }
+    header h1 { font-size: 24px; color: var(--secondary); margin-bottom: 4px; }
+    header p { color: #64748b; font-size: 14px; }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px; }
+    .card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid var(--border); }
+
+    .upload-zone { border: 2px dashed var(--primary); border-radius: 10px; padding: 25px; text-align: center; cursor: pointer; background: #eff6ff; transition: 0.2s; }
+    .upload-zone:hover { background: #dbeafe; }
+    .upload-zone input { display: none; }
+
+    .preset-title { font-size: 13px; font-weight: 700; color: var(--secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .preset-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-bottom: 15px; }
+    .preset-chip { background: #f8fafc; border: 1px solid var(--border); padding: 8px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; text-align: center; cursor: pointer; transition: 0.2s; }
+    .preset-chip:hover { border-color: var(--primary); background: #eff6ff; color: var(--primary); }
+
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+    label { font-size: 12px; font-weight: 600; margin-bottom: 4px; display: block; }
+    input[type="text"], input[type="number"], select { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; outline: none; }
+    input:focus, select:focus { border-color: var(--primary); }
+
+    .tool-btn-group { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+    .small-btn { padding: 6px 12px; background: #e2e8f0; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    .small-btn:hover { background: #cbd5e1; }
+
+    .cropper-container-box { max-height: 380px; width: 100%; background: #000; border-radius: 8px; overflow: hidden; margin-top: 15px; display: none; }
+    .cropper-container-box img { max-width: 100%; }
+
+    .btn-main { width: 100%; margin-top: 15px; padding: 12px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+    .btn-main:hover { background: var(--primary-dark); }
+
+    .output-card { text-align: center; display: none; margin-top: 20px; }
+    .output-card img { max-width: 180px; max-height: 220px; border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 10px; }
+    .stats-badge { font-size: 13px; font-weight: 600; color: #166534; background: #dcfce7; padding: 6px 12px; border-radius: 20px; display: inline-block; margin-bottom: 12px; }
+    .btn-download { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; padding: 10px 24px; border-radius: 6px; font-weight: 700; font-size: 14px; }
+    .btn-download:hover { background: #059669; }
+
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>DocPrep Pro Suite</h1>
+    <p>Official Photo, Signature & Certificate Resizer with Name-Date Stamp</p>
+  </header>
+
+  <div class="card">
+    <div class="preset-title">⚡ Quick Exam & Govt Portals Presets</div>
+    <div class="preset-grid">
+      <div class="preset-chip" onclick="setPreset(200, 230, 50, 'photo')">SSC / UPSC Photo<br><small>(200x230 | 50KB)</small></div>
+      <div class="preset-chip" onclick="setPreset(140, 60, 20, 'sig')">Signature<br><small>(140x60 | 20KB)</small></div>
+      <div class="preset-chip" onclick="setPreset(350, 450, 100, 'photo')">Indian Passport<br><small>(3.5x4.5cm | 100KB)</small></div>
+      <div class="preset-chip" onclick="setPreset(213, 213, 50, 'photo')">PAN Card Photo<br><small>(213x213 | 50KB)</small></div>
+      <div class="preset-chip" onclick="setPreset(480, 640, 100, 'photo')">BPSC / State PSC<br><small>(3:4 Ratio | 100KB)</small></div>
+      <div class="preset-chip" onclick="setPreset(800, 1200, 300, 'doc')">Document Scan<br><small>(A4 Ratio | 300KB)</small></div>
+    </div>
+
+    <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+      <input type="file" id="fileInput" accept="image/*">
+      <p id="uploadLabel">📁 <b>Click or Drag Photo / Signature here</b> (JPG, PNG, WEBP)</p>
+    </div>
+
+    <div class="cropper-container-box" id="cropperContainer">
+      <img id="cropperImage" alt="Crop Source">
+    </div>
+
+    <div class="tool-btn-group" id="cropControls" style="display: none;">
+      <button class="small-btn" onclick="rotateLeft()">↺ Rotate Left</button>
+      <button class="small-btn" onclick="rotateRight()">↻ Rotate Right</button>
+      <button class="small-btn" onclick="resetCrop()">Reset Crop</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="preset-title">📐 Resize & Format Controls</div>
+      
+      <div class="input-row">
+        <div>
+          <label>Width (Pixels):</label>
+          <input type="number" id="targetW" value="200">
+        </div>
+        <div>
+          <label>Height (Pixels):</label>
+          <input type="number" id="targetH" value="230">
+        </div>
+      </div>
+
+      <div class="input-row">
+        <div>
+          <label>Max Target File Size (KB):</label>
+          <input type="number" id="targetKb" value="50">
+        </div>
+        <div>
+          <label>Format:</label>
+          <select id="outFormat">
+            <option value="image/jpeg">JPG / JPEG</option>
+            <option value="image/png">PNG</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="preset-title">🏷️ Name & Date on Photo (Optional)</div>
+      <label>Candidate Name (Printed at bottom):</label>
+      <input type="text" id="stampName" placeholder="e.g. KARAN KUMAR" style="margin-bottom: 10px;">
+
+      <label>Date of Photo (DOP / DOB):</label>
+      <input type="text" id="stampDate" placeholder="e.g. DOP: 20/08/2026">
+    </div>
+  </div>
+
+  <button class="btn-main" onclick="generateOutput()">⚡ Generate & Optimize Final File</button>
+
+  <div class="card output-card" id="outputCard">
+    <div class="preset-title">✅ Processed & Validated Image</div>
+    <img id="finalPreview" alt="Final Processed Output"><br>
+    <div class="stats-badge" id="statsBadge">Dimensions: 200x230 | 38.4 KB</div><br>
+    <a id="downloadBtn" class="btn-download" download="DocPrep_Resized.jpg">⬇️ Download Ready File</a>
+  </div>
+</div>
+
+<script>
+  let cropper = null;
+  const fileInput = document.getElementById('fileInput');
+  const cropperContainer = document.getElementById('cropperContainer');
+  const cropperImage = document.getElementById('cropperImage');
+  const cropControls = document.getElementById('cropControls');
+
+  fileInput.addEventListener('change', function(e) {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      document.getElementById('uploadLabel').innerHTML = `Selected: <b>${file.name}</b> (${(file.size/1024).toFixed(1)} KB)`;
+      
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        cropperImage.src = evt.target.result;
+        cropperContainer.style.display = 'block';
+        cropControls.style.display = 'flex';
+
+        if (cropper) cropper.destroy();
+        cropper = new Cropper(cropperImage, {
+          viewMode: 1,
+          autoCropArea: 0.9,
+          responsive: true
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  function rotateLeft() { if (cropper) cropper.rotate(-90); }
+  function rotateRight() { if (cropper) cropper.rotate(90); }
+  function resetCrop() { if (cropper) cropper.reset(); }
+
+  function setPreset(w, h, kb, type) {
+    document.getElementById('targetW').value = w;
+    document.getElementById('targetH').value = h;
+    document.getElementById('targetKb').value = kb;
+    if (cropper) {
+      cropper.setAspectRatio(w / h);
+    }
+  }
+
+  function generateOutput() {
+    if (!cropper) {
+      alert("Please upload an image first!");
+      return;
+    }
+
+    const targetW = parseInt(document.getElementById('targetW').value) || 200;
+    const targetH = parseInt(document.getElementById('targetH').value) || 230;
+    const targetKb = parseFloat(document.getElementById('targetKb').value) || 50;
+    const format = document.getElementById('outFormat').value;
+
+    const name = document.getElementById('stampName').value.trim();
+    const date = document.getElementById('stampDate').value.trim();
+
+    // Render cropped base image
+    const croppedCanvas = cropper.getCroppedCanvas({
+      width: targetW,
+      height: targetH,
+      imageSmoothingEnabled: true,
+      imageSmoothingQuality: 'high'
+    });
+
+    const finalCanvas = document.createElement('canvas');
+    finalCanvas.width = targetW;
+    finalCanvas.height = targetH;
+    const ctx = finalCanvas.getContext('2d');
+
+    // Fill clean white background
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(0, 0, targetW, targetH);
+
+    // Draw main image
+    ctx.drawImage(croppedCanvas, 0, 0, targetW, targetH);
+
+    // If Name/Date stamp requested
+    if (name || date) {
+      const stripHeight = Math.max(32, Math.floor(targetH * 0.18));
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fillRect(0, targetH - stripHeight, targetW, stripHeight);
+      ctx.strokeStyle = "#94a3b8";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(0, targetH - stripHeight, targetW, stripHeight);
+
+      ctx.fillStyle = "#000000";
+      ctx.textAlign = "center";
+      
+      let fontSize = Math.floor(stripHeight * 0.35);
+      ctx.font = `bold ${fontSize}px sans-serif`;
+
+      if (name && date) {
+        ctx.fillText(name, targetW / 2, targetH - stripHeight + fontSize + 2);
+        ctx.font = `${Math.floor(fontSize * 0.9)}px sans-serif`;
+        ctx.fillText(date, targetW / 2, targetH - 4);
+      } else {
+        ctx.fillText(name || date, targetW / 2, targetH - (stripHeight / 2) + (fontSize / 3));
+      }
+    }
+
+    // Binary search compression to hit exact target KB
+    let quality = 0.95;
+    let dataUrl = finalCanvas.toDataURL(format, quality);
+
+    if (format === 'image/jpeg') {
+      let minQ = 0.05, maxQ = 0.98;
+      for (let i = 0; i < 7; i++) {
+        let midQ = (minQ + maxQ) / 2;
+        let testUrl = finalCanvas.toDataURL('image/jpeg', midQ);
+        let testSizeKb = (testUrl.length * 0.75) / 1024;
+
+        if (testSizeKb > targetKb) {
+          maxQ = midQ;
+        } else {
+          minQ = midQ;
+          dataUrl = testUrl;
+        }
+      }
+    }
+
+    const finalSizeKb = ((dataUrl.length * 0.75) / 1024).toFixed(1);
+    
+    // Display result
+    const preview = document.getElementById('finalPreview');
+    preview.src = dataUrl;
+
+    document.getElementById('statsBadge').innerHTML = `Dimensions: <b>${targetW} x ${targetH} px</b> | File Size: <b>${finalSizeKb} KB</b>`;
+
+    const dlBtn = document.getElementById('downloadBtn');
+    dlBtn.href = dataUrl;
+    dlBtn.download = `DocPrep_${targetW}x${targetH}_${finalSizeKb}KB.${format === 'image/jpeg' ? 'jpg' : 'png'}`;
+
+    document.getElementById('outputCard').style.display = 'block';
+    document.getElementById('outputCard').scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
