@@ -2,32 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   
-  <!-- SEO & Social Meta Tags -->
   <title>Sarkari Doc Resizer - Photo, Signature & Govt Exam Form Tool (Exact KB & Pixels)</title>
-  <meta name="title" content="Sarkari Doc Resizer - Photo, Signature & Govt Exam Form Tool">
-  <meta name="description" content="100% Free & Secure Online Tool to resize, crop, change background color, enhance ink, and compress photos & signatures for SSC, UPSC, BPSC, PAN Card, and Passports with Name-Date stamp.">
+  <meta name="description" content="100% Free & Secure Online Tool to resize, crop, change background color, enhance ink, and compress photos & signatures for SSC, UPSC, BPSC, PAN Card, and Passports.">
   <meta name="keywords" content="ssc photo resizer 50kb, upsc signature 20kb, bpsc photo resizer, pan card photo 213x213, photo background color change, add name and date on photo, enhance signature online, compress image to kb">
   <meta name="robots" content="index, follow">
 
-  <!-- Open Graph Meta -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://karansingh27493.github.io/sarkari-doc-resizer/">
-  <meta property="og:title" content="Sarkari Doc Resizer - Free Photo & Signature Resizer for Govt Exams">
-  <meta property="og:description" content="Resize, change background color, and compress photos & signatures with exact KB and Name-Date stamp. 100% browser private.">
-  
-  <!-- Structured Data JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Sarkari Doc Resizer",
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "All",
-    "offers": { "@type": "Offer", "price": "0" }
-  }
-  </script>
+  <meta property="og:title" content="Sarkari Doc Resizer - Free Govt Exam Photo & Sign Tool">
+  <meta property="og:description" content="Instant resize, background color change, ink enhancer, and exact KB compression. 100% browser private.">
 
   <!-- Cropper.js CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
@@ -43,7 +29,7 @@
       --card-bg: #ffffff;
       --text: #1e293b;
       --text-muted: #64748b;
-      --border: #e2e8f0;
+      --border: #cbd5e1;
     }
     body.dark-theme {
       --primary: #3b82f6;
@@ -57,84 +43,85 @@
       --border: #334155;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding: 15px; transition: background-color 0.2s, color 0.2s; }
-    .container { max-width: 900px; margin: 0 auto; }
+    body { background-color: var(--bg); color: var(--text); padding: 12px; transition: 0.2s; }
+    .container { max-width: 850px; margin: 0 auto; }
     
-    header { text-align: center; margin-bottom: 20px; position: relative; }
-    header h1 { font-size: 26px; color: var(--primary); margin-bottom: 4px; }
-    header p { color: var(--text-muted); font-size: 14px; }
+    header { text-align: center; margin-bottom: 15px; position: relative; }
+    header h1 { font-size: 24px; color: var(--primary); margin-bottom: 4px; }
+    header p { color: var(--text-muted); font-size: 13px; }
 
-    .theme-btn { position: absolute; right: 0; top: 0; background: var(--card-bg); border: 1px solid var(--border); border-radius: 50%; width: 38px; height: 38px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+    .theme-btn { position: absolute; right: 0; top: 0; background: var(--card-bg); border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
 
-    .trust-badge { background: #dcfce7; color: #166534; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-align: center; margin: 12px auto; display: inline-flex; align-items: center; gap: 6px; }
+    .trust-badge { background: #dcfce7; color: #166534; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-align: center; margin: 10px auto; display: inline-flex; align-items: center; gap: 6px; }
     body.dark-theme .trust-badge { background: #064e3b; color: #86efac; }
 
-    .share-strip { display: flex; justify-content: center; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
-    .share-btn { padding: 6px 14px; border-radius: 20px; border: none; font-size: 12px; font-weight: 600; cursor: pointer; color: #fff; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+    .share-strip { display: flex; justify-content: center; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+    .share-btn { padding: 6px 14px; border-radius: 20px; border: none; font-size: 11px; font-weight: 600; cursor: pointer; color: #fff; text-decoration: none; }
     .share-wa { background: #25d366; }
     .share-tg { background: #0088cc; }
     .share-cp { background: #64748b; }
 
-    .card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid var(--border); margin-bottom: 20px; }
+    .card { background: var(--card-bg); border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); border: 1px solid var(--border); margin-bottom: 16px; }
 
-    .section-title { font-size: 13px; font-weight: 700; color: var(--secondary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .section-title { font-size: 12px; font-weight: 700; color: var(--secondary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
     
-    .preset-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 8px; margin-bottom: 18px; }
-    .preset-chip { background: var(--bg); border: 1px solid var(--border); padding: 8px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; text-align: center; cursor: pointer; transition: 0.2s; }
+    .preset-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(115px, 1fr)); gap: 6px; margin-bottom: 15px; }
+    .preset-chip { background: var(--bg); border: 1px solid var(--border); padding: 8px 6px; border-radius: 8px; font-size: 11px; font-weight: 600; text-align: center; cursor: pointer; }
     .preset-chip:hover { border-color: var(--primary); color: var(--primary); }
 
-    .upload-zone { border: 2px dashed var(--primary); border-radius: 10px; padding: 25px; text-align: center; cursor: pointer; background: rgba(37, 99, 235, 0.04); transition: 0.2s; }
-    .upload-zone:hover { background: rgba(37, 99, 235, 0.08); }
-    .upload-zone input { display: none; }
+    /* Reliable Mobile Upload Box */
+    .upload-wrapper { border: 2px dashed var(--primary); border-radius: 10px; padding: 20px; text-align: center; background: rgba(37, 99, 235, 0.04); cursor: pointer; }
+    .upload-wrapper input[type="file"] { display: none; }
+    .btn-choose { display: inline-block; background: var(--primary); color: #fff; padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; margin-top: 8px; cursor: pointer; }
 
-    .cropper-box { max-height: 380px; width: 100%; background: #000; border-radius: 8px; overflow: hidden; margin-top: 15px; display: none; }
+    .cropper-box { max-height: 360px; width: 100%; background: #000; border-radius: 8px; overflow: hidden; margin-top: 15px; display: none; }
     .cropper-box img { max-width: 100%; }
 
     .crop-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
     .btn-sm { padding: 6px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; font-size: 12px; font-weight: 600; color: var(--text); cursor: pointer; }
     .btn-sm:hover { border-color: var(--primary); }
 
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-    label { font-size: 12px; font-weight: 600; margin-bottom: 4px; display: block; }
-    input[type="text"], input[type="number"], select { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; outline: none; background: var(--card-bg); color: var(--text); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    label { font-size: 11px; font-weight: 600; margin-bottom: 4px; display: block; }
+    input[type="text"], input[type="number"], select { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; outline: none; background: var(--card-bg); color: var(--text); }
     input:focus, select:focus { border-color: var(--primary); }
 
-    .custom-row { display: flex; gap: 10px; align-items: center; margin-top: 10px; background: rgba(37, 99, 235, 0.04); padding: 10px; border-radius: 8px; border: 1px solid var(--border); }
-    .color-picker-input { width: 45px; height: 35px; padding: 0; border: none; border-radius: 4px; cursor: pointer; }
+    .custom-row { display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-top: 10px; background: rgba(37, 99, 235, 0.04); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); }
+    .color-picker-input { width: 45px; height: 32px; padding: 0; border: none; border-radius: 4px; cursor: pointer; }
 
-    .enhancer-box { background: rgba(37, 99, 235, 0.06); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-top: 12px; display: flex; align-items: center; justify-content: space-between; }
-    .toggle-switch { position: relative; width: 44px; height: 24px; }
+    .enhancer-box { background: rgba(37, 99, 235, 0.06); border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-top: 10px; display: flex; align-items: center; justify-content: space-between; }
+    .toggle-switch { position: relative; width: 40px; height: 22px; }
     .toggle-switch input { opacity: 0; width: 0; height: 0; }
-    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; border-radius: 24px; transition: .3s; }
-    .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; border-radius: 22px; transition: .3s; }
+    .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; }
     input:checked + .slider { background-color: var(--primary); }
-    input:checked + .slider:before { transform: translateX(20px); }
+    input:checked + .slider:before { transform: translateX(18px); }
 
-    .btn-main { width: 100%; padding: 14px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+    .btn-main { width: 100%; padding: 14px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 10px; }
     .btn-main:hover { background: var(--primary-hover); }
 
-    .output-section { text-align: center; display: none; }
+    .output-section { text-align: center; display: none; margin-top: 16px; }
     .output-section img { max-width: 180px; max-height: 220px; border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 10px; }
-    .stats-tag { font-size: 13px; font-weight: 600; color: #15803d; background: #dcfce7; padding: 6px 14px; border-radius: 20px; display: inline-block; margin-bottom: 12px; }
+    .stats-tag { font-size: 12px; font-weight: 600; color: #15803d; background: #dcfce7; padding: 5px 12px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
     body.dark-theme .stats-tag { background: #064e3b; color: #86efac; }
-    .btn-download { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; padding: 11px 28px; border-radius: 6px; font-weight: 700; font-size: 14px; }
+    .btn-download { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; padding: 10px 24px; border-radius: 6px; font-weight: 700; font-size: 13px; }
 
-    .faq-section { margin-top: 30px; border-top: 1px solid var(--border); padding-top: 25px; }
-    .faq-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 10px; }
-    .faq-card h3 { font-size: 14px; color: var(--secondary); margin-bottom: 5px; }
-    .faq-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-    footer { text-align: center; margin-top: 25px; font-size: 12px; color: var(--text-muted); }
+    .faq-section { margin-top: 25px; border-top: 1px solid var(--border); padding-top: 20px; }
+    .faq-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 8px; }
+    .faq-card h3 { font-size: 13px; color: var(--secondary); margin-bottom: 4px; }
+    .faq-card p { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+    footer { text-align: center; margin-top: 20px; font-size: 12px; color: var(--text-muted); }
 
-    @media (max-width: 650px) { .grid-2 { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
 <div class="container">
   <header>
-    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle Dark/Light">🌙</button>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
     <h1>Sarkari Doc Resizer</h1>
-    <p>Official Online Photo, Signature & Document Formatting Suite</p>
+    <p>Official Online Photo, Signature & Document Formatting Tool</p>
     <div class="trust-badge">🔒 100% Client-Side Private • Zero Server Upload</div>
   </header>
 
@@ -155,10 +142,12 @@
       <div class="preset-chip" onclick="setPreset(480, 640, 100)">BPSC / PSC Photo<br><small>3:4 Ratio | 100KB</small></div>
     </div>
 
-    <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
-      <input type="file" id="fileInput" accept="image/*">
-      <p id="uploadLabel">📁 <b>Click or Drag & Drop Photo / Signature</b><br><small style="color:var(--text-muted)">Supports JPG, PNG, WEBP</small></p>
-    </div>
+    <!-- Direct Click Label for Android/iOS -->
+    <label class="upload-wrapper" for="fileInput" id="dropArea">
+      <input type="file" id="fileInput" accept="image/*" onchange="handleFile(this.files)">
+      <p id="uploadLabel" style="font-size:14px; font-weight:600;">📁 Click to Select Photo / Signature</p>
+      <span class="btn-choose">Browse Image</span>
+    </label>
 
     <div class="cropper-box" id="cropperBox">
       <img id="cropImg" alt="Source Crop">
@@ -174,7 +163,7 @@
   <div class="grid-2">
     <div class="card">
       <div class="section-title">📐 Resize & Size Target</div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
         <div>
           <label>Width (Pixels):</label>
           <input type="number" id="targetW" value="200">
@@ -184,7 +173,7 @@
           <input type="number" id="targetH" value="230">
         </div>
       </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
         <div>
           <label>Max Size (KB):</label>
           <input type="number" id="targetKb" value="50">
@@ -201,7 +190,7 @@
       <div class="custom-row">
         <div>
           <label style="margin:0;">Photo Background Color:</label>
-          <small style="color:var(--text-muted); font-size:11px;">Default White (UPSC/SSC/Passport)</small>
+          <small style="color:var(--text-muted); font-size:10px;">Default White (SSC/UPSC)</small>
         </div>
         <input type="color" id="photoBgColor" value="#ffffff" class="color-picker-input">
       </div>
@@ -217,8 +206,8 @@
 
       <div class="enhancer-box">
         <div>
-          <div style="font-size: 13px; font-weight: 700;">✨ Magic Signature Ink Boost</div>
-          <div style="font-size: 11px; color: var(--text-muted);">Converts phone photos to crisp B&W scanner ink</div>
+          <div style="font-size: 12px; font-weight: 700;">✨ Magic Signature Ink Boost</div>
+          <div style="font-size: 10px; color: var(--text-muted);">Sharpens dark black ink for scans</div>
         </div>
         <label class="toggle-switch">
           <input type="checkbox" id="inkBoost">
@@ -241,33 +230,22 @@
     <div class="section-title">Frequently Asked Questions</div>
     <div class="faq-card">
       <h3>How to crop and compress photo under 50KB for SSC & UPSC?</h3>
-      <p>Tap the "SSC / UPSC Photo" preset, align your face in the crop window, and click Generate. The binary compression engine will guarantee the size stays under 50KB.</p>
+      <p>Select your photo, tap the "SSC / UPSC Photo" preset, align your face in the crop box, and click Generate.</p>
     </div>
     <div class="faq-card">
-      <h3>What is the Magic Signature Ink Boost?</h3>
-      <p>It automatically enhances contrast and removes shadows from signatures photographed in poor light, giving a crisp black-and-white scan required by exam portals.</p>
-    </div>
-    <div class="faq-card">
-      <h3>Are my personal photos and signatures safe?</h3>
-      <p>Yes, 100%. All processing occurs strictly inside your web browser. No image data is ever transferred across the internet.</p>
-    </div>
-    <div class="faq-card">
-      <h3>How to change photo background to White or Blue?</h3>
-      <p>Use the "Photo Background Color" selector to choose Pure White (#ffffff) or Light Blue (#dbeafe) as mandated by exam guidelines.</p>
+      <h3>What is Magic Signature Ink Boost?</h3>
+      <p>It removes grey shadows from phone camera photos and turns signatures into crisp black-and-white ink.</p>
     </div>
   </section>
 
   <footer>
-    <p>© 2026 Sarkari Doc Resizer • Fast, Free & Secure Utility</p>
+    <p>© 2026 Sarkari Doc Resizer • Fast, Free & 100% Secure Utility</p>
   </footer>
 </div>
 
 <script>
   let cropper = null;
-  const fileInput = document.getElementById('fileInput');
-  const cropperBox = document.getElementById('cropperBox');
-  const cropImg = document.getElementById('cropImg');
-  const cropActions = document.getElementById('cropActions');
+  let rawImageSrc = null;
 
   window.onload = function() {
     document.getElementById('stampName').value = localStorage.getItem('dp_name') || '';
@@ -290,19 +268,29 @@
     localStorage.setItem('dp_date', document.getElementById('stampDate').value);
   }
 
-  fileInput.addEventListener('change', function(e) {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
+  function handleFile(files) {
+    if (files && files[0]) {
+      const file = files[0];
       document.getElementById('uploadLabel').innerHTML = `Selected: <b>${file.name}</b> (${(file.size/1024).toFixed(1)} KB)`;
       
       const reader = new FileReader();
       reader.onload = function(evt) {
-        cropImg.src = evt.target.result;
-        cropperBox.style.display = 'block';
-        cropActions.style.display = 'flex';
+        rawImageSrc = evt.target.result;
+        const cropImg = document.getElementById('cropImg');
+        cropImg.src = rawImageSrc;
+        
+        document.getElementById('cropperBox').style.display = 'block';
+        document.getElementById('cropActions').style.display = 'flex';
 
-        if (cropper) cropper.destroy();
+        if (cropper) {
+          cropper.destroy();
+        }
+
+        const w = parseInt(document.getElementById('targetW').value) || 200;
+        const h = parseInt(document.getElementById('targetH').value) || 230;
+
         cropper = new Cropper(cropImg, {
+          aspectRatio: w / h,
           viewMode: 1,
           autoCropArea: 0.9,
           responsive: true
@@ -310,7 +298,7 @@
       };
       reader.readAsDataURL(file);
     }
-  });
+  }
 
   function rotateLeft() { if (cropper) cropper.rotate(-90); }
   function rotateRight() { if (cropper) cropper.rotate(90); }
@@ -320,7 +308,9 @@
     document.getElementById('targetW').value = w;
     document.getElementById('targetH').value = h;
     document.getElementById('targetKb').value = kb;
-    if (cropper) cropper.setAspectRatio(w / h);
+    if (cropper) {
+      cropper.setAspectRatio(w / h);
+    }
   }
 
   function share(platform) {
@@ -336,8 +326,8 @@
   }
 
   function processFinalOutput() {
-    if (!cropper) {
-      alert("Please choose a photo or signature file first!");
+    if (!rawImageSrc) {
+      alert("Pehle Photo ya Signature upload karein!");
       return;
     }
 
@@ -351,31 +341,36 @@
     const name = document.getElementById('stampName').value.trim();
     const date = document.getElementById('stampDate').value.trim();
 
-    const croppedCanvas = cropper.getCroppedCanvas({
-      width: targetW,
-      height: targetH,
-      imageSmoothingEnabled: true,
-      imageSmoothingQuality: 'high'
-    });
+    let croppedCanvas;
+    if (cropper) {
+      croppedCanvas = cropper.getCroppedCanvas({
+        width: targetW,
+        height: targetH,
+        imageSmoothingEnabled: true,
+        imageSmoothingQuality: 'high'
+      });
+    }
 
     const finalCanvas = document.createElement('canvas');
     finalCanvas.width = targetW;
     finalCanvas.height = targetH;
     const ctx = finalCanvas.getContext('2d');
 
-    // Fill background color
+    // Fill chosen background color
     ctx.fillStyle = chosenBgColor;
     ctx.fillRect(0, 0, targetW, targetH);
 
     if (isInkBoost) {
-      ctx.filter = 'contrast(200%) brightness(110%) grayscale(100%)';
+      ctx.filter = 'contrast(220%) brightness(105%) grayscale(100%)';
     }
-    ctx.drawImage(croppedCanvas, 0, 0, targetW, targetH);
+    if (croppedCanvas) {
+      ctx.drawImage(croppedCanvas, 0, 0, targetW, targetH);
+    }
     ctx.filter = 'none';
 
     // Candidate Name & DOP Banner
     if (name || date) {
-      const stripHeight = Math.max(32, Math.floor(targetH * 0.18));
+      const stripHeight = Math.max(30, Math.floor(targetH * 0.18));
       ctx.fillStyle = "#FFFFFF";
       ctx.fillRect(0, targetH - stripHeight, targetW, stripHeight);
       ctx.strokeStyle = "#94a3b8";
@@ -409,4 +404,22 @@
         let testSizeKb = (testUrl.length * 0.75) / 1024;
 
         if (testSizeKb > targetKb) {
-        
+          maxQ = midQ;
+        } else {
+          minQ = midQ;
+          dataUrl = testUrl;
+        }
+      }
+    }
+
+    const finalSizeKb = ((dataUrl.length * 0.75) / 1024).toFixed(1);
+    
+    document.getElementById('finalImg').src = dataUrl;
+    document.getElementById('statsInfo').innerHTML = `Dimensions: <b>${targetW} x ${targetH} px</b> | File Size: <b>${finalSizeKb} KB</b>`;
+    
+    const dl = document.getElementById('downloadLink');
+    dl.href = dataUrl;
+    dl.download = `Sarkari_${targetW}x${targetH}_${finalSizeKb}KB.${format === 'image/jpeg' ? 'jpg' : 'png'}`;
+
+    document.getElementById('outputCard').style.display = 'block';
+    document.getElementById('outputCard').scrollIntoView({ behavior: 'smooth' });
