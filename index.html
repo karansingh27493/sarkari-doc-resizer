@@ -300,7 +300,7 @@
   });
 
   function rotateLeft() { if (cropper) cropper.rotate(-90); }
-  function rotateRight() { if (cropper) cropper.rotate(90); }
+  function rotateRight() { if (cropper) rotateRight(); }
   function resetCrop() { if (cropper) cropper.reset(); }
 
   function setPreset(w, h, kb) {
