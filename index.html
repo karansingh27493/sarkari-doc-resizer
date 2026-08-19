@@ -4,25 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- SEO & Social Meta Tags -->
-  <title>DocPrep Pro - Ultimate Photo, Signature & Govt Form Resizer (Exact KB & Pixels)</title>
-  <meta name="title" content="DocPrep Pro - Ultimate Photo, Signature & Govt Form Resizer">
-  <meta name="description" content="100% Free & Secure Online Tool to resize, crop, enhance, and compress photos & signatures for SSC, UPSC, BPSC, PAN Card, and Passports with Name-Date stamp.">
-  <meta name="keywords" content="ssc photo resizer 50kb, upsc signature 20kb, bpsc photo resizer, pan card photo 213x213, add name and date on photo, enhance signature online, compress image to kb">
+  <title>DocPrep Pro - Photo Resizer, PDF Tools & DOC Converter</title>
+  <meta name="description" content="All-in-one free browser utility: Photo & Signature Resizer, Image to PDF Maker, PDF to Image, and PDF to Word (.doc) Converter.">
   <meta name="robots" content="index, follow">
 
-  <!-- Open Graph Meta -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://karansingh27493.github.io/sarkari-doc-resizer/">
-  <meta property="og:title" content="DocPrep Pro - Free Photo & Signature Resizer for Govt Exams">
-  <meta property="og:description" content="Resize and compress photos & signatures with exact KB and Name-Date stamp. 100% browser private.">
-  
   <!-- Structured Data JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "DocPrep Pro",
+    "name": "DocPrep Pro Suite",
     "url": "https://karansingh27493.github.io/sarkari-doc-resizer/",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "All",
@@ -30,9 +21,11 @@
   }
   </script>
 
-  <!-- Cropper.js CDN -->
+  <!-- Required CDNs (Cropper, jsPDF, PDF.js) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
   <style>
     :root {
@@ -61,31 +54,27 @@
     body { background-color: var(--bg); color: var(--text); padding: 15px; transition: background-color 0.2s, color 0.2s; }
     .container { max-width: 900px; margin: 0 auto; }
     
-    header { text-align: center; margin-bottom: 20px; position: relative; }
-    header h1 { font-size: 26px; color: var(--primary); margin-bottom: 4px; }
-    header p { color: var(--text-muted); font-size: 14px; }
+    header { text-align: center; margin-bottom: 15px; position: relative; }
+    header h1 { font-size: 24px; color: var(--primary); margin-bottom: 4px; }
+    header p { color: var(--text-muted); font-size: 13px; }
 
-    .theme-btn { position: absolute; right: 0; top: 0; background: var(--card-bg); border: 1px solid var(--border); border-radius: 50%; width: 38px; height: 38px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+    .theme-btn { position: absolute; right: 0; top: 0; background: var(--card-bg); border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; }
 
-    .trust-badge { background: #dcfce7; color: #166534; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-align: center; margin: 12px auto; display: inline-flex; align-items: center; gap: 6px; }
-    body.dark-theme .trust-badge { background: #064e3b; color: #86efac; }
+    .nav-tabs { display: flex; gap: 8px; margin-bottom: 18px; background: var(--card-bg); padding: 6px; border-radius: 10px; border: 1px solid var(--border); flex-wrap: wrap; }
+    .tab-btn { flex: 1; min-width: 120px; padding: 10px; border: none; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; background: transparent; color: var(--text-muted); transition: 0.2s; }
+    .tab-btn.active { background: var(--primary); color: #ffffff; }
 
-    .share-strip { display: flex; justify-content: center; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
-    .share-btn { padding: 6px 14px; border-radius: 20px; border: none; font-size: 12px; font-weight: 600; cursor: pointer; color: #fff; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
-    .share-wa { background: #25d366; }
-    .share-tg { background: #0088cc; }
-    .share-cp { background: #64748b; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
-    .card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid var(--border); margin-bottom: 20px; }
-
+    .card { background: var(--card-bg); border-radius: 12px; padding: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid var(--border); margin-bottom: 18px; }
     .section-title { font-size: 13px; font-weight: 700; color: var(--secondary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
     
-    .preset-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 8px; margin-bottom: 18px; }
-    .preset-chip { background: var(--bg); border: 1px solid var(--border); padding: 8px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; text-align: center; cursor: pointer; transition: 0.2s; }
+    .preset-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-bottom: 15px; }
+    .preset-chip { background: var(--bg); border: 1px solid var(--border); padding: 8px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; text-align: center; cursor: pointer; }
     .preset-chip:hover { border-color: var(--primary); color: var(--primary); }
 
-    .upload-zone { border: 2px dashed var(--primary); border-radius: 10px; padding: 25px; text-align: center; cursor: pointer; background: rgba(37, 99, 235, 0.04); transition: 0.2s; }
-    .upload-zone:hover { background: rgba(37, 99, 235, 0.08); }
+    .upload-zone { border: 2px dashed var(--primary); border-radius: 10px; padding: 22px; text-align: center; cursor: pointer; background: rgba(37, 99, 235, 0.04); }
     .upload-zone input { display: none; }
 
     .cropper-box { max-height: 380px; width: 100%; background: #000; border-radius: 8px; overflow: hidden; margin-top: 15px; display: none; }
@@ -93,12 +82,11 @@
 
     .crop-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
     .btn-sm { padding: 6px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; font-size: 12px; font-weight: 600; color: var(--text); cursor: pointer; }
-    .btn-sm:hover { border-color: var(--primary); }
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
     label { font-size: 12px; font-weight: 600; margin-bottom: 4px; display: block; }
-    input[type="text"], input[type="number"], select { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; outline: none; background: var(--card-bg); color: var(--text); }
-    input:focus, select:focus { border-color: var(--primary); }
+    input[type="text"], input[type="number"], select, textarea { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; outline: none; background: var(--card-bg); color: var(--text); }
+    textarea { resize: vertical; min-height: 120px; font-family: monospace; }
 
     .enhancer-box { background: rgba(37, 99, 235, 0.06); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-top: 12px; display: flex; align-items: center; justify-content: space-between; }
     .toggle-switch { position: relative; width: 44px; height: 24px; }
@@ -108,20 +96,12 @@
     input:checked + .slider { background-color: var(--primary); }
     input:checked + .slider:before { transform: translateX(20px); }
 
-    .btn-main { width: 100%; padding: 14px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.2s; }
-    .btn-main:hover { background: var(--primary-hover); }
+    .btn-main { width: 100%; padding: 13px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+    .btn-download { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; padding: 10px 24px; border-radius: 6px; font-weight: 700; font-size: 13px; margin-top: 8px; }
 
     .output-section { text-align: center; display: none; }
-    .output-section img { max-width: 180px; max-height: 220px; border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 10px; }
-    .stats-tag { font-size: 13px; font-weight: 600; color: #15803d; background: #dcfce7; padding: 6px 14px; border-radius: 20px; display: inline-block; margin-bottom: 12px; }
-    body.dark-theme .stats-tag { background: #064e3b; color: #86efac; }
-    .btn-download { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; padding: 11px 28px; border-radius: 6px; font-weight: 700; font-size: 14px; }
-
-    .faq-section { margin-top: 30px; border-top: 1px solid var(--border); padding-top: 25px; }
-    .faq-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 10px; }
-    .faq-card h3 { font-size: 14px; color: var(--secondary); margin-bottom: 5px; }
-    .faq-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-    footer { text-align: center; margin-top: 25px; font-size: 12px; color: var(--text-muted); }
+    .output-section img { max-width: 180px; max-height: 220px; border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 8px; }
+    .stats-tag { font-size: 12px; font-weight: 600; color: #15803d; background: #dcfce7; padding: 5px 12px; border-radius: 20px; display: inline-block; }
 
     @media (max-width: 650px) { .grid-2 { grid-template-columns: 1fr; } }
   </style>
@@ -130,152 +110,152 @@
 
 <div class="container">
   <header>
-    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle Dark/Light">🌙</button>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
     <h1>DocPrep Pro Suite</h1>
-    <p>1-Click Online Photo, Signature & Document Resizer</p>
-    <div class="trust-badge">🔒 100% Client-Side Private • Zero Server Upload</div>
+    <p>100% Client-Side Private Document & Photo Toolkit</p>
   </header>
 
-  <div class="share-strip">
-    <a class="share-btn share-wa" href="javascript:void(0)" onclick="share('wa')">💬 Share WhatsApp</a>
-    <a class="share-btn share-tg" href="javascript:void(0)" onclick="share('tg')">✈️ Telegram</a>
-    <button class="share-btn share-cp" onclick="copyLink()">📋 Copy Link</button>
+  <!-- Navigation Switcher -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('resizer')">🖼️ Photo & Sign Resizer</button>
+    <button class="tab-btn" onclick="switchTab('pdfsuite')">📄 Image ⇄ PDF</button>
+    <button class="tab-btn" onclick="switchTab('pdf2doc')">📝 PDF to DOC (Word)</button>
   </div>
 
-  <div class="card">
-    <div class="section-title">⚡ Instant Govt Exam & Portal Presets</div>
-    <div class="preset-grid">
-      <div class="preset-chip" onclick="setPreset(200, 230, 50)">SSC / UPSC Photo<br><small>200x230 | 50KB</small></div>
-      <div class="preset-chip" onclick="setPreset(140, 60, 20)">Signature Scan<br><small>140x60 | 20KB</small></div>
-      <div class="preset-chip" onclick="setPreset(350, 450, 100)">Indian Passport<br><small>3.5x4.5cm | 100KB</small></div>
-      <div class="preset-chip" onclick="setPreset(213, 213, 50)">PAN Card Photo<br><small>213x213 | 50KB</small></div>
-      <div class="preset-chip" onclick="setPreset(400, 200, 30)">PAN Signature<br><small>400x200 | 30KB</small></div>
-      <div class="preset-chip" onclick="setPreset(480, 640, 100)">BPSC / PSC Photo<br><small>3:4 Ratio | 100KB</small></div>
-    </div>
-
-    <!-- Working Upload Zone -->
-    <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
-      <input type="file" id="fileInput" accept="image/*">
-      <p id="uploadLabel">📁 <b>Click or Drag & Drop Photo / Signature</b><br><small style="color:var(--text-muted)">Supports JPG, PNG, WEBP</small></p>
-    </div>
-
-    <div class="cropper-box" id="cropperBox">
-      <img id="cropImg" alt="Source Crop">
-    </div>
-
-    <div class="crop-actions" id="cropActions" style="display: none;">
-      <button class="btn-sm" onclick="rotateLeft()">↺ Rotate Left</button>
-      <button class="btn-sm" onclick="rotateRight()">↻ Rotate Right</button>
-      <button class="btn-sm" onclick="resetCrop()">Reset Box</button>
-    </div>
-  </div>
-
-  <div class="grid-2">
+  <!-- TAB 1: Photo & Signature Resizer -->
+  <div id="tab-resizer" class="tab-content active">
     <div class="card">
-      <div class="section-title">📐 Resize & Size Target</div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-        <div>
-          <label>Width (Pixels):</label>
-          <input type="number" id="targetW" value="200">
+      <div class="section-title">⚡ Instant Govt Exam & Portal Presets</div>
+      <div class="preset-grid">
+        <div class="preset-chip" onclick="setPreset(200, 230, 50)">SSC / UPSC Photo<br><small>200x230 | 50KB</small></div>
+        <div class="preset-chip" onclick="setPreset(140, 60, 20)">Signature Scan<br><small>140x60 | 20KB</small></div>
+        <div class="preset-chip" onclick="setPreset(350, 450, 100)">Indian Passport<br><small>3.5x4.5cm | 100KB</small></div>
+        <div class="preset-chip" onclick="setPreset(213, 213, 50)">PAN Card Photo<br><small>213x213 | 50KB</small></div>
+      </div>
+
+      <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+        <input type="file" id="fileInput" accept="image/*">
+        <p id="uploadLabel">📁 <b>Click or Drag & Drop Photo / Signature</b><br><small style="color:var(--text-muted)">Supports JPG, PNG, WEBP</small></p>
+      </div>
+
+      <div class="cropper-box" id="cropperBox">
+        <img id="cropImg" alt="Source Crop">
+      </div>
+
+      <div class="crop-actions" id="cropActions" style="display: none;">
+        <button class="btn-sm" onclick="rotateLeft()">↺ Rotate Left</button>
+        <button class="btn-sm" onclick="rotateRight()">↻ Rotate Right</button>
+        <button class="btn-sm" onclick="resetCrop()">Reset Box</button>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="section-title">📐 Resize & Size Target</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+          <div><label>Width (Pixels):</label><input type="number" id="targetW" value="200"></div>
+          <div><label>Height (Pixels):</label><input type="number" id="targetH" value="230"></div>
         </div>
-        <div>
-          <label>Height (Pixels):</label>
-          <input type="number" id="targetH" value="230">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div><label>Max Size (KB):</label><input type="number" id="targetKb" value="50"></div>
+          <div><label>Format:</label>
+            <select id="outFormat">
+              <option value="image/jpeg">JPG / JPEG</option>
+              <option value="image/png">PNG</option>
+            </select>
+          </div>
         </div>
       </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-        <div>
-          <label>Max Size (KB):</label>
-          <input type="number" id="targetKb" value="50">
-        </div>
-        <div>
-          <label>Format:</label>
-          <select id="outFormat">
-            <option value="image/jpeg">JPG / JPEG</option>
-            <option value="image/png">PNG</option>
-          </select>
+
+      <div class="card">
+        <div class="section-title">🏷️ Name & Date on Photo</div>
+        <input type="text" id="stampName" placeholder="Candidate Full Name" style="margin-bottom: 8px;">
+        <input type="text" id="stampDate" placeholder="DOP: 20/08/2026">
+        <div class="enhancer-box">
+          <div>
+            <div style="font-size: 12px; font-weight: 700;">✨ Magic Signature Ink Boost</div>
+            <div style="font-size: 10px; color: var(--text-muted);">Converts photos to sharp B&W scan ink</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="inkBoost">
+            <span class="slider"></span>
+          </label>
         </div>
       </div>
+    </div>
+
+    <button class="btn-main" onclick="processFinalOutput()">⚡ Generate & Optimize Resized File</button>
+
+    <div class="card output-section" id="outputCard">
+      <div class="section-title">✅ Processed Ready File</div>
+      <img id="finalImg" alt="Result"><br>
+      <div class="stats-tag" id="statsInfo">Ready</div><br>
+      <a id="downloadLink" class="btn-download" download="DocPrep_Result.jpg">⬇️ Download Ready File</a>
+    </div>
+  </div>
+
+  <!-- TAB 2: Image to PDF & PDF to Image -->
+  <div id="tab-pdfsuite" class="tab-content">
+    <div class="card">
+      <div class="section-title">🖼️➡️📄 Convert Photo / Image to PDF</div>
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Select any image to package into standard A4 PDF document instantly.</p>
+      <input type="file" id="imgToPdfInput" accept="image/*" style="margin-bottom: 10px;">
+      <button class="btn-main" onclick="convertImgToPdf()">📄 Generate & Download PDF</button>
     </div>
 
     <div class="card">
-      <div class="section-title">🏷️ Name & Date on Photo (Auto-Saved)</div>
-      <label>Candidate Full Name:</label>
-      <input type="text" id="stampName" placeholder="e.g. KARAN KUMAR" style="margin-bottom: 8px;" oninput="saveUserData()">
-
-      <label>Date of Photo (DOP / DOB):</label>
-      <input type="text" id="stampDate" placeholder="e.g. DOP: 20/08/2026" oninput="saveUserData()">
-
-      <div class="enhancer-box">
-        <div>
-          <div style="font-size: 13px; font-weight: 700;">✨ Magic Signature Ink Boost</div>
-          <div style="font-size: 11px; color: var(--text-muted);">Converts phone photos to crisp B&W scanner ink</div>
-        </div>
-        <label class="toggle-switch">
-          <input type="checkbox" id="inkBoost">
-          <span class="slider"></span>
-        </label>
+      <div class="section-title">📄➡️🖼️ Extract PDF Pages to JPG Image</div>
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Upload PDF file to extract first page as high-resolution JPG image.</p>
+      <input type="file" id="pdfToImgInput" accept="application/pdf" style="margin-bottom: 10px;">
+      <button class="btn-main" onclick="convertPdfToImg()">🖼️ Convert PDF to JPG Image</button>
+      <div id="pdfImgOutput" style="margin-top: 15px; text-align: center; display: none;">
+        <canvas id="pdfRenderCanvas" style="max-width: 100%; border: 1px solid var(--border); border-radius: 6px;"></canvas><br>
+        <a id="pdfImgDownloadBtn" class="btn-download" download="PDF_Extracted_Page.jpg">⬇️ Download JPG Image</a>
       </div>
     </div>
   </div>
 
-  <button class="btn-main" onclick="processFinalOutput()">⚡ Generate & Optimize Final Image</button>
+  <!-- TAB 3: PDF to DOC (Word) Converter -->
+  <div id="tab-pdf2doc" class="tab-content">
+    <div class="card">
+      <div class="section-title">📝 Convert PDF to Editable Word (.DOC)</div>
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Extract all readable text from any PDF document and save as editable Microsoft Word file.</p>
+      <input type="file" id="pdfDocInput" accept="application/pdf" style="margin-bottom: 10px;">
+      <button class="btn-main" onclick="convertPdfToDoc()">⚡ Extract Text & Convert to DOC</button>
 
-  <div class="card output-section" id="outputCard">
-    <div class="section-title">✅ Processed Ready File</div>
-    <img id="finalImg" alt="Result"><br>
-    <div class="stats-tag" id="statsInfo">Ready</div><br>
-    <a id="downloadLink" class="btn-download" download="DocPrep_Result.jpg">⬇️ Download Ready File</a>
+      <div id="docOutputBox" style="display: none; margin-top: 15px;">
+        <label>Extracted Document Content (Editable):</label>
+        <textarea id="extractedText"></textarea>
+        <button class="btn-main" style="background: var(--accent);" onclick="downloadDocFile()">⬇️ Download as Microsoft Word (.DOC)</button>
+      </div>
+    </div>
   </div>
-
-  <section class="faq-section">
-    <div class="section-title">Frequently Asked Questions</div>
-    <div class="faq-card">
-      <h3>How to crop and compress photo under 50KB for SSC & UPSC?</h3>
-      <p>Tap the "SSC / UPSC Photo" preset, align your face in the crop window, and click Generate. The binary compression engine will guarantee the size stays under 50KB.</p>
-    </div>
-    <div class="faq-card">
-      <h3>What is the Magic Signature Ink Boost?</h3>
-      <p>It automatically enhances contrast and removes shadows from signatures photographed in poor light, giving a crisp black-and-white scan required by exam portals.</p>
-    </div>
-    <div class="faq-card">
-      <h3>Are my personal photos and signatures safe?</h3>
-      <p>Yes, 100%. All processing occurs strictly inside your web browser. No image data is ever transferred across the internet.</p>
-    </div>
-  </section>
-
-  <footer>
-    <p>© 2026 DocPrep Pro Suite • Fast & Secure Application Utility</p>
-  </footer>
 </div>
 
 <script>
-  let cropper = null;
-  const fileInput = document.getElementById('fileInput');
-  const cropperBox = document.getElementById('cropperBox');
-  const cropImg = document.getElementById('cropImg');
-  const cropActions = document.getElementById('cropActions');
-
-  window.onload = function() {
-    document.getElementById('stampName').value = localStorage.getItem('dp_name') || '';
-    document.getElementById('stampDate').value = localStorage.getItem('dp_date') || '';
-    if (localStorage.getItem('dp_theme') === 'dark') {
-      document.body.classList.add('dark-theme');
-      document.getElementById('themeBtn').innerText = '☀️';
-    }
-  };
+  // Tab Switcher
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
 
   function toggleTheme() {
     document.body.classList.toggle('dark-theme');
     const isDark = document.body.classList.contains('dark-theme');
     document.getElementById('themeBtn').innerText = isDark ? '☀️' : '🌙';
-    localStorage.setItem('dp_theme', isDark ? 'dark' : 'light');
   }
 
-  function saveUserData() {
-    localStorage.setItem('dp_name', document.getElementById('stampName').value);
-    localStorage.setItem('dp_date', document.getElementById('stampDate').value);
-  }
+  // Set PDF.js Worker
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  // TAB 1: Photo Resizer Logic
+  let cropper = null;
+  const fileInput = document.getElementById('fileInput');
+  const cropperBox = document.getElementById('cropperBox');
+  const cropImg = document.getElementById('cropImg');
+  const cropActions = document.getElementById('cropActions');
 
   fileInput.addEventListener('change', function(e) {
     if (e.target.files && e.target.files[0]) {
@@ -300,7 +280,7 @@
   });
 
   function rotateLeft() { if (cropper) cropper.rotate(-90); }
-  function rotateRight() { if (cropper) rotateRight(); }
+  function rotateRight() { if (cropper) cropper.rotate(90); }
   function resetCrop() { if (cropper) cropper.reset(); }
 
   function setPreset(w, h, kb) {
@@ -310,23 +290,8 @@
     if (cropper) cropper.setAspectRatio(w / h);
   }
 
-  function share(platform) {
-    const text = "Resize and fix photo/signature for SSC, UPSC & BPSC forms instantly: ";
-    const url = window.location.href;
-    if (platform === 'wa') window.open(`https://wa.me/?text=${encodeURIComponent(text + url)}`);
-    if (platform === 'tg') window.open(`https://t.me/share/url?url=${url}&text=${encodeURIComponent(text)}`);
-  }
-
-  function copyLink() {
-    navigator.clipboard.writeText(window.location.href);
-    alert("Website link copied to clipboard!");
-  }
-
   function processFinalOutput() {
-    if (!cropper) {
-      alert("Please choose a photo or signature file first!");
-      return;
-    }
+    if (!cropper) return alert("Select a photo first!");
 
     const targetW = parseInt(document.getElementById('targetW').value) || 200;
     const targetH = parseInt(document.getElementById('targetH').value) || 230;
@@ -337,13 +302,7 @@
     const name = document.getElementById('stampName').value.trim();
     const date = document.getElementById('stampDate').value.trim();
 
-    const croppedCanvas = cropper.getCroppedCanvas({
-      width: targetW,
-      height: targetH,
-      imageSmoothingEnabled: true,
-      imageSmoothingQuality: 'high'
-    });
-
+    const croppedCanvas = cropper.getCroppedCanvas({ width: targetW, height: targetH });
     const finalCanvas = document.createElement('canvas');
     finalCanvas.width = targetW;
     finalCanvas.height = targetH;
@@ -352,9 +311,7 @@
     ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(0, 0, targetW, targetH);
 
-    if (isInkBoost) {
-      ctx.filter = 'contrast(200%) brightness(110%) grayscale(100%)';
-    }
+    if (isInkBoost) ctx.filter = 'contrast(200%) brightness(110%) grayscale(100%)';
     ctx.drawImage(croppedCanvas, 0, 0, targetW, targetH);
     ctx.filter = 'none';
 
@@ -363,12 +320,10 @@
       ctx.fillStyle = "#FFFFFF";
       ctx.fillRect(0, targetH - stripHeight, targetW, stripHeight);
       ctx.strokeStyle = "#94a3b8";
-      ctx.lineWidth = 1;
       ctx.strokeRect(0, targetH - stripHeight, targetW, stripHeight);
 
       ctx.fillStyle = "#000000";
       ctx.textAlign = "center";
-      
       let fontSize = Math.floor(stripHeight * 0.35);
       ctx.font = `bold ${fontSize}px sans-serif`;
 
@@ -389,9 +344,7 @@
       for (let i = 0; i < 7; i++) {
         let midQ = (minQ + maxQ) / 2;
         let testUrl = finalCanvas.toDataURL('image/jpeg', midQ);
-        let testSizeKb = (testUrl.length * 0.75) / 1024;
-
-        if (testSizeKb > targetKb) {
+        if ((testUrl.length * 0.75) / 1024 > targetKb) {
           maxQ = midQ;
         } else {
           minQ = midQ;
@@ -401,18 +354,61 @@
     }
 
     const finalSizeKb = ((dataUrl.length * 0.75) / 1024).toFixed(1);
-    
     document.getElementById('finalImg').src = dataUrl;
     document.getElementById('statsInfo').innerHTML = `Dimensions: <b>${targetW} x ${targetH} px</b> | File Size: <b>${finalSizeKb} KB</b>`;
-    
-    const dl = document.getElementById('downloadLink');
-    dl.href = dataUrl;
-    dl.download = `DocPrep_${targetW}x${targetH}_${finalSizeKb}KB.${format === 'image/jpeg' ? 'jpg' : 'png'}`;
-
+    document.getElementById('downloadLink').href = dataUrl;
     document.getElementById('outputCard').style.display = 'block';
     document.getElementById('outputCard').scrollIntoView({ behavior: 'smooth' });
   }
-</script>
 
-</body>
-</html>
+  // TAB 2: Image to PDF
+  function convertImgToPdf() {
+    const input = document.getElementById('imgToPdfInput');
+    if (!input.files || !input.files[0]) return alert("Select an image first!");
+    
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (img.height * pdfWidth) / img.width;
+        pdf.addImage(e.target.result, 'JPEG', 0, 0, pdfWidth, Math.min(pdfHeight, 297));
+        pdf.save(file.name.replace(/\.[^/.]+$/, "") + ".pdf");
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // TAB 2: PDF to Image (JPG)
+  function convertPdfToImg() {
+    const input = document.getElementById('pdfToImgInput');
+    if (!input.files || !input.files[0]) return alert("Select a PDF file first!");
+
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const typedArray = new Uint8Array(e.target.result);
+      pdfjsLib.getDocument(typedArray).promise.then(function(pdf) {
+        pdf.getPage(1).then(function(page) {
+          const viewport = page.getViewport({ scale: 1.5 });
+          const canvas = document.getElementById('pdfRenderCanvas');
+          const context = canvas.getContext('2d');
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+
+          page.render({ canvasContext: context, viewport: viewport }).promise.then(function() {
+            document.getElementById('pdfImgOutput').style.display = 'block';
+            document.getElementById('pdfImgDownloadBtn').href = canvas.toDataURL('image/jpeg', 0.95);
+          });
+        });
+      });
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  // TAB 3: PDF to DOC (Word) Converter
+  function convertPd
