@@ -17,14 +17,13 @@
   <meta property="og:title" content="DocPrep Pro - Free Photo & Signature Resizer for Govt Exams">
   <meta property="og:description" content="Resize and compress photos & signatures with exact KB and Name-Date stamp. 100% browser private.">
   
-  <!-- Structured Data JSON-LD (Google Search Indexing) -->
+  <!-- Structured Data JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "DocPrep Pro",
     "url": "https://karansingh27493.github.io/sarkari-doc-resizer/",
-    "description": "100% Free online tool to resize, crop, change background color, and compress photos & signatures for SSC, UPSC, BPSC, and PAN cards.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "All",
     "offers": { "@type": "Offer", "price": "0" }
@@ -154,7 +153,6 @@
       <div class="preset-chip" onclick="setPreset(480, 640, 100)">BPSC / PSC Photo<br><small>3:4 Ratio | 100KB</small></div>
     </div>
 
-    <!-- Working Upload Zone -->
     <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
       <input type="file" id="fileInput" accept="image/*">
       <p id="uploadLabel">📁 <b>Click or Drag & Drop Photo / Signature</b><br><small style="color:var(--text-muted)">Supports JPG, PNG, WEBP</small></p>
@@ -184,7 +182,7 @@
           <input type="number" id="targetH" value="230">
         </div>
       </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
         <div>
           <label>Max Size (KB):</label>
           <input type="number" id="targetKb" value="50">
@@ -196,10 +194,6 @@
             <option value="image/png">PNG</option>
           </select>
         </div>
-      </div>
-      <div>
-        <label>Photo Background Color:</label>
-        <input type="color" id="photoBgColor" value="#ffffff" style="height: 38px; padding: 2px; cursor: pointer;">
       </div>
     </div>
 
@@ -338,7 +332,6 @@
     const targetKb = parseFloat(document.getElementById('targetKb').value) || 50;
     const format = document.getElementById('outFormat').value;
     const isInkBoost = document.getElementById('inkBoost').checked;
-    const chosenBgColor = document.getElementById('photoBgColor') ? document.getElementById('photoBgColor').value : "#FFFFFF";
 
     const name = document.getElementById('stampName').value.trim();
     const date = document.getElementById('stampDate').value.trim();
@@ -355,8 +348,7 @@
     finalCanvas.height = targetH;
     const ctx = finalCanvas.getContext('2d');
 
-    // Fill Selected Background Color
-    ctx.fillStyle = chosenBgColor;
+    ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(0, 0, targetW, targetH);
 
     if (isInkBoost) {
@@ -414,4 +406,12 @@
     
     const dl = document.getElementById('downloadLink');
     dl.href = dataUrl;
-    dl.download = `DocPrep_${targetW}x${targetH}_${finalSizeK
+    dl.download = `DocPrep_${targetW}x${targetH}_${finalSizeKb}KB.${format === 'image/jpeg' ? 'jpg' : 'png'}`;
+
+    document.getElementById('outputCard').style.display = 'block';
+    document.getElementById('outputCard').scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
