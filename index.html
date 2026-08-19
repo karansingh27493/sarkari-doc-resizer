@@ -21,7 +21,7 @@
   }
   </script>
 
-  <!-- Required CDNs (Cropper, jsPDF, PDF.js) -->
+  <!-- External CDNs -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -60,8 +60,8 @@
 
     .theme-btn { position: absolute; right: 0; top: 0; background: var(--card-bg); border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; }
 
-    .nav-tabs { display: flex; gap: 8px; margin-bottom: 18px; background: var(--card-bg); padding: 6px; border-radius: 10px; border: 1px solid var(--border); flex-wrap: wrap; }
-    .tab-btn { flex: 1; min-width: 120px; padding: 10px; border: none; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; background: transparent; color: var(--text-muted); transition: 0.2s; }
+    .nav-tabs { display: flex; gap: 6px; margin-bottom: 18px; background: var(--card-bg); padding: 6px; border-radius: 10px; border: 1px solid var(--border); }
+    .tab-btn { flex: 1; padding: 10px 6px; border: none; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; background: transparent; color: var(--text-muted); transition: 0.2s; }
     .tab-btn.active { background: var(--primary); color: #ffffff; }
 
     .tab-content { display: none; }
@@ -115,14 +115,14 @@
     <p>100% Client-Side Private Document & Photo Toolkit</p>
   </header>
 
-  <!-- Navigation Switcher -->
+  <!-- Navigation Tabs -->
   <div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('resizer')">🖼️ Photo & Sign Resizer</button>
-    <button class="tab-btn" onclick="switchTab('pdfsuite')">📄 Image ⇄ PDF</button>
-    <button class="tab-btn" onclick="switchTab('pdf2doc')">📝 PDF to DOC (Word)</button>
+    <button class="tab-btn active" id="btn-tab-resizer" onclick="openTab('resizer')">🖼️ Photo Resizer</button>
+    <button class="tab-btn" id="btn-tab-pdfsuite" onclick="openTab('pdfsuite')">📄 Image ⇄ PDF</button>
+    <button class="tab-btn" id="btn-tab-pdf2doc" onclick="openTab('pdf2doc')">📝 PDF to Word</button>
   </div>
 
-  <!-- TAB 1: Photo & Signature Resizer -->
+  <!-- TAB 1: Photo & Signature Resizer (Exact Original Logic) -->
   <div id="tab-resizer" class="tab-content active">
     <div class="card">
       <div class="section-title">⚡ Instant Govt Exam & Portal Presets</div>
@@ -233,36 +233,44 @@
 </div>
 
 <script>
-  // Tab Switcher
-  function switchTab(tabId) {
-    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  // Safe Tab Switcher
+  function openTab(tabId) {
+    var contents = document.querySelectorAll('.tab-content');
+    for (var i = 0; i < contents.length; i++) {
+      contents[i].classList.remove('active');
+    }
+    var buttons = document.querySelectorAll('.tab-btn');
+    for (var j = 0; j < buttons.length; j++) {
+      buttons[j].classList.remove('active');
+    }
     document.getElementById('tab-' + tabId).classList.add('active');
-    event.currentTarget.classList.add('active');
+    document.getElementById('btn-tab-' + tabId).classList.add('active');
   }
 
   function toggleTheme() {
     document.body.classList.toggle('dark-theme');
-    const isDark = document.body.classList.contains('dark-theme');
+    var isDark = document.body.classList.contains('dark-theme');
     document.getElementById('themeBtn').innerText = isDark ? '☀️' : '🌙';
   }
 
-  // Set PDF.js Worker
-  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  // Set PDF.js Worker Safely
+  if (typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
 
-  // TAB 1: Photo Resizer Logic
-  let cropper = null;
-  const fileInput = document.getElementById('fileInput');
-  const cropperBox = document.getElementById('cropperBox');
-  const cropImg = document.getElementById('cropImg');
-  const cropActions = document.getElementById('cropActions');
+  // TAB 1: Exact Working Photo Resizer Logic
+  var cropper = null;
+  var fileInput = document.getElementById('fileInput');
+  var cropperBox = document.getElementById('cropperBox');
+  var cropImg = document.getElementById('cropImg');
+  var cropActions = document.getElementById('cropActions');
 
   fileInput.addEventListener('change', function(e) {
     if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      document.getElementById('uploadLabel').innerHTML = `Selected: <b>${file.name}</b> (${(file.size/1024).toFixed(1)} KB)`;
+      var file = e.target.files[0];
+      document.getElementById('uploadLabel').innerHTML = 'Selected: <b>' + file.name + '</b> (' + (file.size/1024).toFixed(1) + ' KB)';
       
-      const reader = new FileReader();
+      var reader = new FileReader();
       reader.onload = function(evt) {
         cropImg.src = evt.target.result;
         cropperBox.style.display = 'block';
@@ -291,22 +299,25 @@
   }
 
   function processFinalOutput() {
-    if (!cropper) return alert("Select a photo first!");
+    if (!cropper) {
+      alert("Select a photo first!");
+      return;
+    }
 
-    const targetW = parseInt(document.getElementById('targetW').value) || 200;
-    const targetH = parseInt(document.getElementById('targetH').value) || 230;
-    const targetKb = parseFloat(document.getElementById('targetKb').value) || 50;
-    const format = document.getElementById('outFormat').value;
-    const isInkBoost = document.getElementById('inkBoost').checked;
+    var targetW = parseInt(document.getElementById('targetW').value) || 200;
+    var targetH = parseInt(document.getElementById('targetH').value) || 230;
+    var targetKb = parseFloat(document.getElementById('targetKb').value) || 50;
+    var format = document.getElementById('outFormat').value;
+    var isInkBoost = document.getElementById('inkBoost').checked;
 
-    const name = document.getElementById('stampName').value.trim();
-    const date = document.getElementById('stampDate').value.trim();
+    var name = document.getElementById('stampName').value.trim();
+    var date = document.getElementById('stampDate').value.trim();
 
-    const croppedCanvas = cropper.getCroppedCanvas({ width: targetW, height: targetH });
-    const finalCanvas = document.createElement('canvas');
+    var croppedCanvas = cropper.getCroppedCanvas({ width: targetW, height: targetH });
+    var finalCanvas = document.createElement('canvas');
     finalCanvas.width = targetW;
     finalCanvas.height = targetH;
-    const ctx = finalCanvas.getContext('2d');
+    var ctx = finalCanvas.getContext('2d');
 
     ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(0, 0, targetW, targetH);
@@ -316,7 +327,7 @@
     ctx.filter = 'none';
 
     if (name || date) {
-      const stripHeight = Math.max(32, Math.floor(targetH * 0.18));
+      var stripHeight = Math.max(32, Math.floor(targetH * 0.18));
       ctx.fillStyle = "#FFFFFF";
       ctx.fillRect(0, targetH - stripHeight, targetW, stripHeight);
       ctx.strokeStyle = "#94a3b8";
@@ -324,26 +335,26 @@
 
       ctx.fillStyle = "#000000";
       ctx.textAlign = "center";
-      let fontSize = Math.floor(stripHeight * 0.35);
-      ctx.font = `bold ${fontSize}px sans-serif`;
+      var fontSize = Math.floor(stripHeight * 0.35);
+      ctx.font = 'bold ' + fontSize + 'px sans-serif';
 
       if (name && date) {
         ctx.fillText(name, targetW / 2, targetH - stripHeight + fontSize + 2);
-        ctx.font = `${Math.floor(fontSize * 0.9)}px sans-serif`;
+        ctx.font = Math.floor(fontSize * 0.9) + 'px sans-serif';
         ctx.fillText(date, targetW / 2, targetH - 4);
       } else {
         ctx.fillText(name || date, targetW / 2, targetH - (stripHeight / 2) + (fontSize / 3));
       }
     }
 
-    let quality = 0.95;
-    let dataUrl = finalCanvas.toDataURL(format, quality);
+    var quality = 0.95;
+    var dataUrl = finalCanvas.toDataURL(format, quality);
 
     if (format === 'image/jpeg') {
-      let minQ = 0.05, maxQ = 0.98;
-      for (let i = 0; i < 7; i++) {
-        let midQ = (minQ + maxQ) / 2;
-        let testUrl = finalCanvas.toDataURL('image/jpeg', midQ);
+      var minQ = 0.05, maxQ = 0.98;
+      for (var i = 0; i < 7; i++) {
+        var midQ = (minQ + maxQ) / 2;
+        var testUrl = finalCanvas.toDataURL('image/jpeg', midQ);
         if ((testUrl.length * 0.75) / 1024 > targetKb) {
           maxQ = midQ;
         } else {
@@ -353,9 +364,9 @@
       }
     }
 
-    const finalSizeKb = ((dataUrl.length * 0.75) / 1024).toFixed(1);
+    var finalSizeKb = ((dataUrl.length * 0.75) / 1024).toFixed(1);
     document.getElementById('finalImg').src = dataUrl;
-    document.getElementById('statsInfo').innerHTML = `Dimensions: <b>${targetW} x ${targetH} px</b> | File Size: <b>${finalSizeKb} KB</b>`;
+    document.getElementById('statsInfo').innerHTML = 'Dimensions: <b>' + targetW + ' x ' + targetH + ' px</b> | File Size: <b>' + finalSizeKb + ' KB</b>';
     document.getElementById('downloadLink').href = dataUrl;
     document.getElementById('outputCard').style.display = 'block';
     document.getElementById('outputCard').scrollIntoView({ behavior: 'smooth' });
@@ -363,18 +374,18 @@
 
   // TAB 2: Image to PDF
   function convertImgToPdf() {
-    const input = document.getElementById('imgToPdfInput');
+    var input = document.getElementById('imgToPdfInput');
     if (!input.files || !input.files[0]) return alert("Select an image first!");
     
-    const file = input.files[0];
-    const reader = new FileReader();
+    var file = input.files[0];
+    var reader = new FileReader();
     reader.onload = function(e) {
-      const img = new Image();
+      var img = new Image();
       img.onload = function() {
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (img.height * pdfWidth) / img.width;
+        var jsPDF = window.jspdf.jsPDF;
+        var pdf = new jsPDF('p', 'mm', 'a4');
+        var pdfWidth = pdf.internal.pageSize.getWidth();
+        var pdfHeight = (img.height * pdfWidth) / img.width;
         pdf.addImage(e.target.result, 'JPEG', 0, 0, pdfWidth, Math.min(pdfHeight, 297));
         pdf.save(file.name.replace(/\.[^/.]+$/, "") + ".pdf");
       };
@@ -385,30 +396,21 @@
 
   // TAB 2: PDF to Image (JPG)
   function convertPdfToImg() {
-    const input = document.getElementById('pdfToImgInput');
+    var input = document.getElementById('pdfToImgInput');
     if (!input.files || !input.files[0]) return alert("Select a PDF file first!");
 
-    const file = input.files[0];
-    const reader = new FileReader();
+    var file = input.files[0];
+    var reader = new FileReader();
     reader.onload = function(e) {
-      const typedArray = new Uint8Array(e.target.result);
+      var typedArray = new Uint8Array(e.target.result);
       pdfjsLib.getDocument(typedArray).promise.then(function(pdf) {
         pdf.getPage(1).then(function(page) {
-          const viewport = page.getViewport({ scale: 1.5 });
-          const canvas = document.getElementById('pdfRenderCanvas');
-          const context = canvas.getContext('2d');
+          var viewport = page.getViewport({ scale: 1.5 });
+          var canvas = document.getElementById('pdfRenderCanvas');
+          var context = canvas.getContext('2d');
           canvas.height = viewport.height;
           canvas.width = viewport.width;
 
           page.render({ canvasContext: context, viewport: viewport }).promise.then(function() {
             document.getElementById('pdfImgOutput').style.display = 'block';
-            document.getElementById('pdfImgDownloadBtn').href = canvas.toDataURL('image/jpeg', 0.95);
-          });
-        });
-      });
-    };
-    reader.readAsArrayBuffer(file);
-  }
-
-  // TAB 3: PDF to DOC (Word) Converter
-  function convertPd
+            document.
