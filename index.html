@@ -61,7 +61,7 @@
       --text-muted: #94a3b8;
       --border: #334155;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
     body { background-color: var(--bg); color: var(--text); padding: 12px; transition: 0.2s; }
     .container { max-width: 850px; margin: 0 auto; }
     
@@ -69,61 +69,60 @@
     header h1 { font-size: 24px; color: var(--primary); margin-bottom: 4px; }
     header p { color: var(--text-muted); font-size: 13px; }
 
-    .theme-btn { position: absolute; right: 0; top: 0; background: var(--card-bg); border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+    .theme-btn { position: absolute; right: 0; top: 0; background: var(--card-bg); border: 1px solid var(--border); border-radius: 50%; width: 38px; height: 38px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
 
-    .trust-badge { background: #dcfce7; color: #166534; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-align: center; margin: 10px auto; display: inline-flex; align-items: center; gap: 6px; }
+    .trust-badge { background: #dcfce7; color: #166534; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; text-align: center; margin: 10px auto; display: inline-flex; align-items: center; gap: 6px; }
     body.dark-theme .trust-badge { background: #064e3b; color: #86efac; }
 
     .share-strip { display: flex; justify-content: center; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
-    .share-btn { padding: 6px 14px; border-radius: 20px; border: none; font-size: 11px; font-weight: 600; cursor: pointer; color: #fff; text-decoration: none; }
+    .share-btn { padding: 6px 14px; border-radius: 20px; border: none; font-size: 11px; font-weight: 600; cursor: pointer; color: #fff; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
     .share-wa { background: #25d366; }
     .share-tg { background: #0088cc; }
     .share-cp { background: #64748b; }
 
     .card { background: var(--card-bg); border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); border: 1px solid var(--border); margin-bottom: 16px; }
-
     .section-title { font-size: 12px; font-weight: 700; color: var(--secondary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
     
     .preset-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(115px, 1fr)); gap: 6px; margin-bottom: 15px; }
     .preset-chip { background: var(--bg); border: 1px solid var(--border); padding: 8px 6px; border-radius: 8px; font-size: 11px; font-weight: 600; text-align: center; cursor: pointer; }
     .preset-chip:hover { border-color: var(--primary); color: var(--primary); }
 
-    /* Reliable File Upload Box */
-    .file-input-box { background: rgba(37, 99, 235, 0.05); border: 2px dashed var(--primary); border-radius: 10px; padding: 18px 12px; text-align: center; cursor: pointer; }
-    .file-native-input { width: 100%; max-width: 320px; padding: 8px; font-size: 13px; cursor: pointer; background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; margin-top: 8px; }
-    .status-msg { margin-top: 8px; font-size: 12px; font-weight: 600; color: #15803d; }
+    /* Direct 100% Reliable File Picker */
+    .file-input-box { background: rgba(37, 99, 235, 0.05); border: 2px dashed var(--primary); border-radius: 10px; padding: 20px 15px; text-align: center; }
+    .file-native-input { width: 100%; max-width: 320px; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; margin-top: 8px; color: var(--text); display: block; margin-left: auto; margin-right: auto; }
+    .status-msg { margin-top: 10px; font-size: 13px; font-weight: 700; color: #15803d; }
 
-    .cropper-box { max-height: 380px; width: 100%; background: #000; border-radius: 8px; overflow: hidden; margin-top: 15px; display: none; }
+    .cropper-box { width: 100%; max-height: 400px; background: #000; border-radius: 8px; overflow: hidden; margin-top: 15px; display: none; }
     .cropper-box img { max-width: 100%; display: block; }
 
-    .crop-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
-    .btn-sm { padding: 6px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; font-size: 12px; font-weight: 600; color: var(--text); cursor: pointer; }
+    .crop-actions { display: none; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+    .btn-sm { padding: 8px 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; font-size: 12px; font-weight: 600; color: var(--text); cursor: pointer; }
     .btn-sm:hover { border-color: var(--primary); }
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     label { font-size: 11px; font-weight: 600; margin-bottom: 4px; display: block; }
-    input[type="text"], input[type="number"], select { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; outline: none; background: var(--card-bg); color: var(--text); }
+    input[type="text"], input[type="number"], select { width: 100%; padding: 9px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; outline: none; background: var(--card-bg); color: var(--text); }
     input:focus, select:focus { border-color: var(--primary); }
 
     .custom-row { display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-top: 10px; background: rgba(37, 99, 235, 0.04); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); }
-    .color-picker-input { width: 45px; height: 32px; padding: 0; border: none; border-radius: 4px; cursor: pointer; }
+    .color-picker-input { width: 48px; height: 34px; padding: 0; border: none; border-radius: 4px; cursor: pointer; }
 
     .enhancer-box { background: rgba(37, 99, 235, 0.06); border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-top: 10px; display: flex; align-items: center; justify-content: space-between; }
-    .toggle-switch { position: relative; width: 40px; height: 22px; }
+    .toggle-switch { position: relative; width: 42px; height: 22px; }
     .toggle-switch input { opacity: 0; width: 0; height: 0; }
     .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; border-radius: 22px; transition: .3s; }
     .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; }
     input:checked + .slider { background-color: var(--primary); }
-    input:checked + .slider:before { transform: translateX(18px); }
+    input:checked + .slider:before { transform: translateX(20px); }
 
-    .btn-main { width: 100%; padding: 14px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+    .btn-main { width: 100%; padding: 14px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: 0.2s; }
     .btn-main:hover { background: var(--primary-hover); }
 
     .output-section { text-align: center; display: none; margin-top: 16px; }
-    .output-section img { max-width: 180px; max-height: 220px; border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 10px; }
-    .stats-tag { font-size: 12px; font-weight: 600; color: #15803d; background: #dcfce7; padding: 5px 12px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
+    .output-section img { max-width: 200px; max-height: 240px; border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 10px; }
+    .stats-tag { font-size: 12px; font-weight: 600; color: #15803d; background: #dcfce7; padding: 5px 14px; border-radius: 20px; display: inline-block; margin-bottom: 12px; }
     body.dark-theme .stats-tag { background: #064e3b; color: #86efac; }
-    .btn-download { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; padding: 10px 24px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+    .btn-download { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; padding: 11px 26px; border-radius: 6px; font-weight: 700; font-size: 14px; }
 
     .faq-section { margin-top: 25px; border-top: 1px solid var(--border); padding-top: 20px; }
     .faq-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 8px; }
@@ -161,9 +160,9 @@
       <div class="preset-chip" onclick="setPreset(480, 640, 100)">BPSC / PSC Photo<br><small>3:4 Ratio | 100KB</small></div>
     </div>
 
-    <!-- Direct Native & Drag-and-Drop Area -->
-    <div class="file-input-box" id="dropZone">
-      <p style="font-size:14px; font-weight:700;">📁 Step 1: Select Photo / Signature File</p>
+    <!-- Step 1 Upload -->
+    <div class="file-input-box">
+      <p style="font-size:15px; font-weight:700;">📁 Step 1: Select Photo / Signature File</p>
       <input type="file" id="fileInput" class="file-native-input" accept="image/*">
       <div id="statusMsg" class="status-msg" style="display:none;"></div>
     </div>
@@ -172,7 +171,7 @@
       <img id="cropImg" alt="Source Crop">
     </div>
 
-    <div class="crop-actions" id="cropActions" style="display: none;">
+    <div class="crop-actions" id="cropActions">
       <button class="btn-sm" onclick="rotateLeft()">↺ Rotate Left</button>
       <button class="btn-sm" onclick="rotateRight()">↻ Rotate Right</button>
       <button class="btn-sm" onclick="resetCrop()">Reset Box</button>
@@ -259,10 +258,6 @@
       <h3>Are my personal documents safe?</h3>
       <p>Yes, 100%. All processing runs strictly inside your local browser. No photo or signature is ever uploaded to any external server.</p>
     </div>
-    <div class="faq-card">
-      <h3>How to set background color to White or Light Blue?</h3>
-      <p>Use the "Photo Background Color" selector to choose Pure White (#ffffff) or Sky Blue as required by official guidelines.</p>
-    </div>
   </section>
 
   <footer>
@@ -272,7 +267,7 @@
 
 <script>
   let cropper = null;
-  let loadedImageElement = null;
+  let rawImgElement = null;
 
   window.addEventListener('DOMContentLoaded', function() {
     document.getElementById('stampName').value = localStorage.getItem('dp_name') || '';
@@ -295,7 +290,7 @@
     localStorage.setItem('dp_date', document.getElementById('stampDate').value);
   }
 
-  // Reliable File Listener
+  // Crash-Proof File Selector
   document.getElementById('fileInput').addEventListener('change', function(e) {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -304,35 +299,35 @@
     const status = document.getElementById('statusMsg');
     status.style.display = 'block';
     status.innerHTML = `✓ Loaded: <b>${file.name}</b> (${(file.size/1024).toFixed(1)} KB)`;
-    
-    const reader = new FileReader();
-    reader.onload = function(evt) {
-      const cropImg = document.getElementById('cropImg');
-      cropImg.src = evt.target.result;
-      
-      loadedImageElement = new Image();
-      loadedImageElement.src = evt.target.result;
 
-      document.getElementById('cropperBox').style.display = 'block';
-      document.getElementById('cropActions').style.display = 'flex';
+    const objectUrl = URL.createObjectURL(file);
+    const cropImg = document.getElementById('cropImg');
 
-      cropImg.onload = function() {
-        if (typeof Cropper !== 'undefined') {
-          if (cropper) { cropper.destroy(); }
-          const w = parseInt(document.getElementById('targetW').value) || 200;
-          const h = parseInt(document.getElementById('targetH').value) || 230;
+    if (cropper) {
+      cropper.destroy();
+      cropper = null;
+    }
 
-          cropper = new Cropper(cropImg, {
-            aspectRatio: w / h,
-            viewMode: 1,
-            autoCropArea: 0.9,
-            responsive: true,
-            checkOrientation: true
-          });
-        }
-      };
+    document.getElementById('cropperBox').style.display = 'block';
+    document.getElementById('cropActions').style.display = 'flex';
+
+    // Wait for the DOM image to load before attaching Cropper
+    cropImg.onload = function() {
+      rawImgElement = cropImg;
+      const w = parseInt(document.getElementById('targetW').value) || 200;
+      const h = parseInt(document.getElementById('targetH').value) || 230;
+
+      if (typeof Cropper !== 'undefined') {
+        cropper = new Cropper(cropImg, {
+          aspectRatio: w / h,
+          viewMode: 1,
+          autoCropArea: 0.95,
+          responsive: true,
+          restore: false
+        });
+      }
     };
-    reader.readAsDataURL(file);
+    cropImg.src = objectUrl;
   });
 
   function rotateLeft() { if (cropper) cropper.rotate(-90); }
@@ -361,7 +356,7 @@
   }
 
   function processFinalOutput() {
-    if (!loadedImageElement && !cropper) {
+    if (!rawImgElement && !cropper) {
       alert("Pehle Step 1 mein Photo ya Signature file select karein!");
       return;
     }
@@ -391,13 +386,13 @@
     finalCanvas.height = targetH;
     const ctx = finalCanvas.getContext('2d');
 
-    // Background Color Fill
+    // Background Color
     ctx.fillStyle = chosenBgColor;
     ctx.fillRect(0, 0, targetW, targetH);
 
     let stripHeight = 0;
     if (name || date) {
-      stripHeight = Math.max(30, Math.floor(targetH * 0.18));
+      stripHeight = Math.max(32, Math.floor(targetH * 0.18));
     }
     const renderHeight = targetH - stripHeight;
 
@@ -407,11 +402,17 @@
     
     if (croppedCanvas) {
       ctx.drawImage(croppedCanvas, 0, 0, targetW, renderHeight);
-    } else if (loadedImageElement) {
-      ctx.drawImage(loadedImageElement, 0, 0, targetW, renderHeight);
+    } else if (rawImgElement) {
+      ctx.drawImage(rawImgElement, 0, 0, targetW, renderHeight);
     }
     ctx.filter = 'none';
 
-    // Candidate Name & DOP Banner
+    // Candidate Name & DOP Strip
     if (name || date) {
-   
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fillRect(0, targetH - stripHeight, targetW, stripHeight);
+      ctx.strokeStyle = "#94a3b8";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(0, targetH - stripHeight, targetW, stripHeight);
+
+      ctx.fillSt
