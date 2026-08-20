@@ -246,6 +246,9 @@
 
   <footer>
     <p>© 2026 DocPrep Pro Suite • Fast & Secure Application Utility</p>
+    <p style="margin-top: 12px;">
+      <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fkaransingh27493.github.io%2Fsarkari-doc-resizer&title=Total+Visitors&edge_flat=false" alt="Total Visitors">
+    </p>
   </footer>
 </div>
 
@@ -300,7 +303,7 @@
   });
 
   function rotateLeft() { if (cropper) cropper.rotate(-90); }
-  function rotateRight() { if (cropper) rotateRight(); }
+  function rotateRight() { if (cropper) cropper.rotate(90); }
   function resetCrop() { if (cropper) cropper.reset(); }
 
   function setPreset(w, h, kb) {
